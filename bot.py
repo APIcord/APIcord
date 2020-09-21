@@ -5,7 +5,7 @@ import urllib3
 
 
 # Token and prefix
-token = ("[TOKEN]")
+token = ("token here")
 prefix = ("api!")
 
 
@@ -17,7 +17,7 @@ print("Man, there isn't nothing to see here, it's a normal Discord.py bot.")
 # Status
 @bot.event
 async def on_ready():
-  await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="APIs | " + prefix + "help"))
+  await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=discord.ActivityType.watching, name="APIs | " + prefix + "help"))
 # Good part
 @bot.event
 async def on_message(message):
