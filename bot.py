@@ -5,10 +5,8 @@ import urllib3
 
 
 # Token and prefix
-token = ("NzU3MjU4Mjk4NzI1NjMwMDA4.X2dxvw.z5mgs-EO1_AEd5K-HA_XGp0TkRc")
+token = ("[TOKEN]")
 prefix = ("api!")
-CoffeeAPI = ("https://coffee.alexflipnote.dev/random.json")
-
 
 # Start stuff
 bot = discord.Client()
