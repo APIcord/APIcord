@@ -5,8 +5,9 @@ import urllib3
 
 
 # Token and prefix
-token = ("[TOKEN]")
+token = ("NzU3MjU4Mjk4NzI1NjMwMDA4.X2dxvw.CKAdgsgv7EYjQQgHtwdh1VAa1pg")
 prefix = ("api!")
+
 
 # Start stuff
 bot = discord.Client()
@@ -27,10 +28,10 @@ async def on_message(message):
     channel = message.channel
 
     embed=discord.Embed(title=("APIcord"), description=("Help"), color=(0xff0000))
-    embed.add_field(name=(prefix + "help"), value=("Meme aleatorio"), inline=True)
-    embed.add_field(name=(prefix + "coffee"), value=("Imagén de café aleatorio"), inline=True)
-    embed.add_field(name=(prefix + "dog"), value=("Imagen de perro aleatoria"), inline=True)
-    embed.add_field(name=(prefix + "cat"), value=("Imagen de gato aleatoria"), inline=True)
+    embed.add_field(name=(prefix + "help"), value=("Help command"), inline=True)
+    embed.add_field(name=(prefix + "coffee"), value=("Random coffee image"), inline=True)
+    embed.add_field(name=(prefix + "dog"), value=("Random dog image"), inline=True)
+    embed.add_field(name=(prefix + "cat"), value=("Random cat image"), inline=True)
 
     embed.add_field(name=("Meme commands"), value=("lol."), inline=False)
     embed.add_field(name=(prefix + "reddit"), value=("Random Reddit meme"), inline=True)
@@ -40,21 +41,21 @@ async def on_message(message):
     embed.add_field(name=(prefix + "license"), value=("License"), inline=True)
     embed.add_field(name=(prefix + "invite"), value=("Displays bot invite"), inline=True)
     embed.add_field(name=(prefix + "privacy"), value=("Bot Privacy Policy"), inline=True)
+    embed.add_field(name=(prefix + "code"), value=("Source code"), inline=True)
 
     await channel.send(embed=embed)
   elif message.content.startswith(prefix + "coffee"):
     channel = message.channel
     jdat = (http.request('GET', 'https://coffee.alexflipnote.dev/random.json'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
-    embed=discord.Embed(title="Acá te traje un café", description="Espero que te guste uwu", color=0xff0000)
-    embed.set_footer(text="Powered by Coffe API (https://coffee.alexflipnote.dev)")
+    embed=discord.Embed(title="Here you have your coffee", description="", color=0xff0000)
     await channel.send(embed=embed)
     await channel.send(jsdata['file'])
   elif message.content.startswith(prefix + "dog"):
     channel = message.channel
     jdat = (http.request('GET', 'https://dog.ceo/api/breeds/image/random'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
-    embed=discord.Embed(title="Un perrito :D", description="Espero que te guste uwu", color=0xff0000)
+    embed=discord.Embed(title="A doggo! :D", description="I wish you'll like this uwu", color=0xff0000)
     await channel.send(embed=embed)
     await channel.send(jsdata['message'])
   elif message.content.startswith(prefix + "cat"):
@@ -65,7 +66,7 @@ async def on_message(message):
     jdat = (http.request('GET', 'https://meme-api.herokuapp.com/gimme'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     if jsdata['nsfw'] == "true":
-      embed=discord.Embed(title="Este meme es NSFW", description="Vamos a recargar este comando, disculpe las molestias.", color=0xff0000)
+      embed=discord.Embed(title="This meme is NSFW", description="We're going to reload this command, sorry for the incombinient.", color=0xff0000)
       await channel.send(embed=embed)
       await channel.send(prefix + "reddit")
     else:
@@ -78,7 +79,8 @@ async def on_message(message):
       await channel.send(jsdata['url'])
       await channel.send(embed=embed_two)
   elif message.content.startswith(prefix + "invite"):
-    await channel.send("Podés invitarme a tu servidor desde acá: https://apicord.github.io/invite")
+    channel = message.channel
+    await channel.send("You can invite me to your server clicking in this link: https://apicord.github.io/invite")
   elif message.content.startswith(prefix + "about"):
     channel = message.channel
     embed=discord.Embed(title=("APIcord"), description=("Credits"), color=(0xff0000))
@@ -98,5 +100,8 @@ async def on_message(message):
   elif message.content.startswith(prefix + "privacy"):
     channel = message.channel
     await channel.send("https://apicord.github.io/privacy")
+  elif message.content.startswith(prefix + "code"):
+    channel = message.channel
+    await channel.send("https://github.com/L64/APIcord")
 bot.run(token)
 # I don't know how to make a totally functional bot ._.
