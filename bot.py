@@ -5,7 +5,7 @@ import urllib3
 
 
 # Token and prefix
-token = ("NzU3MjU4Mjk4NzI1NjMwMDA4.X2dxvw.CKAdgsgv7EYjQQgHtwdh1VAa1pg")
+token = ("[TOKEN]")
 prefix = ("api!")
 
 
