@@ -193,7 +193,7 @@ async def on_message(message):
 
   elif message.content.startswith(prefix + "about"):
     channel = message.channel
-    embed=discord.Embed(title=("APIcord Alpha1.5"), description=("Credits"), color=(botcolor))
+    embed=discord.Embed(title=("APIcord Alpha 1.1"), description=("Credits"), color=(botcolor))
     embed.add_field(name=("Creator and programmer"), value=("LT#5266"), inline=(False))
     embed.add_field(name=("APIs"), value=("used in this project"), inline=(False))
     embed.add_field(name=(prefix + "img coffee"), value=("Coffee API by Alex Flipnote"), inline=(True))
