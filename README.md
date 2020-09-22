@@ -1,9 +1,9 @@
 # APIcord
 ## Features
-<li>Coffee Images</li>
-<li>Dog Images</li>
-<li>Cat Images (Coming Soon)</li>
-<li>Reddit Memes</li>
+<li>[Coffee Images](https://coffee.alexflipnote.dev)</li>
+<li>[Dog Images](https://dog.ceo/dog-api)</li>
+<li>[Cat Images (Coming Soon)](https://thecatapi.com)</li>
+<li>[Reddit Memes](https://github.com/R3l3ntl3ss/Meme_Api)</li>
 
 ## Ideas
 <li>Coronavirus Counter (Maybe)</li>
