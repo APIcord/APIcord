@@ -2,8 +2,9 @@
 ## Features
 <li><a href="https://coffee.alexflipnote.dev">Coffee Images</a></li>
 <li><a href="https://dog.ceo/dog-api">Dog Images</a></li>
-<li><a href="https://thecatapi.com">Cat Images (Coming Soon)</a></li>
+<li><a href="https://catfact.ninja">Cat Facts<a/></li>
 <li><a href="https://github.com/R3l3ntl3ss/Meme_Api">Reddit Memes</a></li>
+<li><a href="https://some-random-apis.ml">and more!!!</a></li>
 
 ## Ideas
 <li>Coronavirus Counter (Maybe)</li>
