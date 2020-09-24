@@ -1,2 +1,4 @@
+discord.py
 discord
 urllib3
+flask
