@@ -16,10 +16,11 @@ color = ("red")
 
 
 # Start stuff
-bot = commands.Bot(command_prefix=prefix)
+bot = commands.Bot(command_prefix=prefix, allowed_mentions=discord.AllowedMentions(roles=False, users=False, everyone=False))
 embed = discord.Embed
 http = urllib3.PoolManager()
 print("APIcord")
+print("Logs:")
 
 
 # Color
@@ -45,8 +46,6 @@ elif color == ("orange"):
 @bot.event
 async def on_ready():
   await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=discord.ActivityType.watching, name="APIs | " + prefix + "commands"))
-  print("It's working!")
-  print("Logs:")
 # Good part
 
 @bot.command()
@@ -157,20 +156,20 @@ async def hug(ctx):
     await ctx.send(jsdata['link'])
 
 @bot.command()
-async def meme(ctx, whatm):
-  if whatm == "meme":
+async def meme(ctx, memetype):
+  if memetype == "meme":
     jdat = (http.request('GET', 'https://some-random-api.ml/meme'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     embed=discord.Embed(title=(jsdata['caption']), description=(""), color=(botcolor))
-    embed.set_image(jsdata['image'])
+    embed.set_image(url=jsdata['image'])
     await ctx.send(embed=embed)
-  elif whatm == "reddit":
+  elif memetype == "reddit":
     jdat = (http.request('GET', 'https://meme-api.herokuapp.com/gimme'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     if jsdata['nsfw'] == "true":
       embed=discord.Embed(title=("This meme is NSFW"), description=("We're going to reload this command, sorry for the incombinient."), color=(botcolor))
       await ctx.send(embed=embed)
-      await ctx.send(prefix + "meme reddit")
+      await ctx.send(prefix + "reddit")
     else:
       #Embed
       embed_two=discord.Embed(title=(jsdata['title']), url=(jsdata['postLink']), description=(""), color=(botcolor))
@@ -178,7 +177,7 @@ async def meme(ctx, whatm):
       embed_two.set_thumbnail(url="https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png")
       embed_two.add_field(name="Posted by:", value=("u/" + jsdata['author']), inline=(True))
       embed_two.add_field(name="Subreddit:", value=("r/" + jsdata['subreddit']), inline=(True))
-      embed_two.set_image(jsdata['url'])
+      embed_two.set_image(url=jsdata['url'])
       await ctx.send(embed=embed_two)
 
 @bot.command()
@@ -187,7 +186,7 @@ async def invite(ctx):
 
 @bot.command()
 async def about(ctx):
-  embed=discord.Embed(title=("APIcord Alpha 2"), description=("Credits"), color=(botcolor))
+  embed=discord.Embed(title=("APIcord Alpha 2.1"), description=("Credits"), color=(botcolor))
   embed.add_field(name=("Creator and programmer"), value=("LT#5266"), inline=(False))
   embed.add_field(name=("APIs"), value=("used in this project"), inline=(False))
   embed.add_field(name=(prefix + "img coffee"), value=("Coffee API by Alex Flipnote"), inline=(True))
@@ -197,6 +196,7 @@ async def about(ctx):
   embed.add_field(name=(prefix + "Some Random Api"), value=("by Seif Mansour, Taka Inzori, Excigma & Telk"), inline=(False))
   embed.add_field(name=(prefix + "Some Random Api"), value=("by Seif Mansour, Taka Inzori, Excigma & Telk"), inline=(True))
   embed.add_field(name=("Commands"), value=("img cat, " + prefix + "img panda, " + prefix + "img red panda " + prefix + "img bird, " + prefix + "img fox, " + prefix + "img koala, " + prefix + "meme meme & " + prefix + "hug"), inline=(True))
+  embed.set_footer(text="Thanks to Polking to follow the development and Discord Extreme List guys for some help")
   await ctx.send(embed=embed)
 
 @bot.command()
@@ -230,26 +230,23 @@ async def botstats(ctx):
 
 @bot.command()
 async def polking(ctx):
-  await ctx.send("Bot recomendado: **MonsterWorld**")
-  await ctx.send("https://discord.com/oauth2/authorize?client_id=756602085298143412&scope=bot&permissions=2147483647")
+  embed=discord.Embed(title="**MonsterWorld**", url="https://discord.com/oauth2/authorize?client_id=756602085298143412&scope=bot&permissions=2147483647", description="Bot recomendado", color=botcolor)
+  await ctx.send(embed=embed)
 @bot.command()
 async def egg(ctx):
   await ctx.send('🥚')
 @bot.command()
 async def BigF(ctx):
-  await ctx.send("FFFFFFFFFF")
-  await ctx.send("FFFFFFFFFF")
-  await ctx.send("FFF")
-  await ctx.send("FFFFFF")
-  await ctx.send("FFFFFF")
-  await ctx.send("FFF")
-  await ctx.send("FFF")
-  await ctx.send("FFF")
+  await ctx.send("FFFFFFFFFF \n FFFFFFFFFF \n FFF \n FFFFFF \n FFFFFF \n FFF \n FFF \n FFF")
+@bot.command()
+async def SmolF(ctx):
+  await ctx.send("**f** (:-) aww, a small F, this is cute uwu)")
 @bot.command()
 async def reeeeee(ctx):
-    await ctx.send("https://i.ytimg.com/vi/725L5OrDr4k/maxresdefault.jpg")
-    await ctx.send("**REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE**")
-    await ctx.send("thanks to https://www.youtube.com/channel/UCWhzDk_bUwar8JaRpRhm9jg for the image and Matt Furie for Pepe the frog")
+  await ctx.send("**REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE**")
+@bot.command()
+async def thereisanimpostoramongus(ctx):
+  await ctx.send("**ඞ There is an impostor among us ඞ**")
 @bot.command()
 async def DEL(ctx):
   await ctx.send("Discord Extreme List, i don't know who is but, sounds like a nice name :)")
