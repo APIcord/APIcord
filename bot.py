@@ -1,11 +1,10 @@
 import time
 import discord
+from discord.ext import commands
 import flask
 import json
 import urllib3
 import keep_alive
-
-
 
 
 # Token and prefix
@@ -13,16 +12,14 @@ token = ("[token]")
 prefix = ("api!")
 # Color chooser
 color = ("red")
-# Options: red, grey, blue_metalic & green
-
-
+# Options: red, white, black, grey, blue_metalic, green, light_blue & yellow
 
 
 # Start stuff
-bot = discord.Client()
+bot = commands.Bot(command_prefix=prefix)
 embed = discord.Embed
 http = urllib3.PoolManager()
-print("Man, there isn't nothing to see here, it's a normal Discord.py bot.")
+print("APIcord")
 
 
 # Color
@@ -30,170 +27,150 @@ if color == ("red"):
   botcolor= (0xff0000)
 elif color == ("grey"):
   botcolor = (0xffffff)
+elif color == ("white"):
+  botcolor = (0xffffff)
+elif color == ("black"):
+  botcolor == (0x000000)
 elif color == ("blue_metalic"):
   botcolor = (0xfff)
 elif color == ("green"):
   botcolor == (0xff000)
-
+elif color == ("light_blue"):
+  botcolor = (0x00fbff)
+elif color == ("yellow"):
+  botcolor = (0xffee00)
+elif color == ("orange"):
+  botcolor = (0xff8800)
 # Status
 @bot.event
 async def on_ready():
-  await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=discord.ActivityType.watching, name="APIs | " + prefix + "help"))
+  await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=discord.ActivityType.watching, name="APIs | " + prefix + "commands"))
+  print("It's working!")
+  print("Logs:")
 # Good part
-@bot.event
-async def on_message(message):
-  if message.content.startswith(prefix + "nice"):
-    channel = message.channel
-    await channel.send("Thank you! You're nice too 👍")
-  elif message.content.startswith(prefix + "help"):
-    channel = message.channel
 
-    embed=discord.Embed(title=("APIcord"), description=("Help"), color=(botcolor))
-    embed.add_field(name=(prefix + "help"), value=("Help command"), inline=(True))
-    embed.add_field(name=(prefix + "help"), value=("Random Chuck Norris Joke"), inline=(True))
-    embed.add_field(name=(prefix + "hug"), value=("A hug, for you, my friend"), inline=(True))
+@bot.command()
+async def nice(ctx):
+  await ctx.send("Thank you! You're nice too 👍")
 
-    embed.add_field(name=("Meme commands"), value=(prefix + "meme"), inline=(False))
-    # meme=discord.Embed(title=("Meme commands"), description=(prefix + "meme"), color=(botcolor))
-    embed.add_field(name=(prefix + "meme meme"), value=("Random meme"), inline=(True))
-    embed.add_field(name=(prefix + "meme reddit"), value=("Random Reddit meme"), inline=(True))
+@bot.command()
+async def commands(ctx):
+  embed=discord.Embed(title="APIcord", description="Help", color=botcolor)
+  embed.add_field(name=prefix + "chucknorris", value="Random Chuck Norris Joke", inline=True)
+  embed.add_field(name=prefix + "say", value="The bot says 1 word for you", inline=True)
+  embed.add_field(name=prefix + "hug", value="A hug, for you, my friend", inline=True)
+  embed.add_field(name="Meme commands", value=prefix + "meme", inline=False)
+  embed.add_field(name=prefix + "meme meme", value="Random meme", inline=True)
+  embed.add_field(name=prefix + "meme reddit", value="Random Reddit meme", inline=True)
+  embed.add_field(name="Image commands", value=prefix + "img", inline=False)
+  embed.add_field(name=prefix + "img coffee", value="Random coffee image", inline=True)
+  embed.add_field(name=prefix + "img dog", value="Random dog image", inline=True)
+  embed.add_field(name=prefix + "img cat", value="Random cat image", inline=True)
+  embed.add_field(name=prefix + "img panda", value="Random panda image", inline=True)
+  embed.add_field(name=prefix + "img red_panda", value="Random red panda image", inline=True)
+  embed.add_field(name=prefix + "img bird", value="Random bird image", inline=True)
+  embed.add_field(name=prefix + "img fox", value="Random fox image", inline=True)
+  embed.add_field(name=prefix + "img koala", value="Random koala image", inline=True)
+  embed.add_field(name="Facts", value=prefix + "fact", inline=False)
+  embed.add_field(name=prefix + "fact cat", value="Random cat fact", inline=True)
+  embed.add_field(name="About the bot", value="No prefix", inline=False)
+  embed.add_field(name=prefix + "about", value="Credits", inline=True)
+  embed.add_field(name=prefix + "license", value="License", inline=True)
+  embed.add_field(name=prefix + "invite", value="Displays bot invite", inline=True)
+  embed.add_field(name=prefix + "privacy", value="Bot Privacy Policy", inline=True)
+  embed.add_field(name=prefix + "code", value="Source code", inline=True)
+  embed.add_field(name=prefix + "commands", value="Displays commands", inline=True)
+  embed.add_field(name=prefix + "botstats", value="Bot stas", inline=True)
+  await ctx.send(embed=embed)
 
-    embed.add_field(name=("Image commands"), value=(prefix + "img"), inline=(False))
-    # img=discord.Embed(title=("Image commands"), description=(prefix + "img"), color=(botcolor))
-    embed.add_field(name=(prefix + "img coffee"), value=("Random coffee image"), inline=(True))
-    embed.add_field(name=(prefix + "img dog"), value=("Random dog image"), inline=(True))
-    embed.add_field(name=(prefix + "img cat"), value=("Random cat image"), inline=(True))
-    embed.add_field(name=(prefix + "img panda"), value=("Random panda image"), inline=(True))
-    embed.add_field(name=(prefix + "img red panda"), value=("Random red panda image"), inline=(True))
-    embed.add_field(name=(prefix + "img bird"), value=("Random bird image"), inline=(True))
-    embed.add_field(name=(prefix + "img fox"), value=("Random fox image"), inline=(True))
-    embed.add_field(name=(prefix + "img koala"), value=("Random koala image"), inline=(True))
-
-    embed.add_field(name=("Facts"), value=(prefix + "fact"), inline=(False))
-    # fact=discord.Embed(title=("Facts"), description=(prefix + "fact"), color=(botcolor))
-    embed.add_field(name=(prefix + "fact cat"), value=("Random cat fact"), inline=True)
-
-    embed.add_field(name=("About the bot"), value=("No prefix"), inline=(False))
-    # about=discord.Embed(title=("About the bot"), description=("License, privacy, credits, etc."), color=(botcolor))
-    embed.add_field(name=(prefix + "about"), value=("Credits"), inline=(True))
-    embed.add_field(name=(prefix + "license"), value=("License"), inline=(True))
-    embed.add_field(name=(prefix + "invite"), value=("Displays bot invite"), inline=(True))
-    embed.add_field(name=(prefix + "privacy"), value=("Bot Privacy Policy"), inline=(True))
-    embed.add_field(name=(prefix + "code"), value=("Source code"), inline=(True))
-
-    await channel.send(embed=embed)
-    # await channel.send(embed=meme)
-    # await channel.send(embed=img)
-    # await channel.send(embed=fact)
-    # await channel.send(embed=about)
-
-
-  elif message.content.startswith(prefix + "img coffee"):
-    channel = message.channel
+@bot.command()
+async def img(ctx, something):
+  if something == "coffee":
     jdat = (http.request('GET', 'https://coffee.alexflipnote.dev/random.json'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     embed=discord.Embed(title=("Here you have your coffee"), description=(""), color=(botcolor))
     embed.set_image(url=(jsdata['file']))
-    await channel.send(embed=embed)
-
-
-  elif message.content.startswith(prefix + "img dog"):
-    channel = message.channel
+    await ctx.send(embed=embed)
+  elif something == "dog":
     jdat = (http.request('GET', 'https://dog.ceo/api/breeds/image/random'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     embed=discord.Embed(title=("A doggo! :D"), description=("I wish you'll like this uwu"), color=(botcolor))
     embed.set_image(url=(jsdata['message']))
-    await channel.send(embed=embed)
-
-  elif message.content.startswith(prefix + "img cat"):
-    channel = message.channel
+    await ctx.send(embed=embed)
+  elif something == "cat":
     jdat = (http.request('GET', 'https://some-random-api.ml/img/cat'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     embed=discord.Embed(title=("A cat! :D"), description=("kittens & adult kittens"), color=(botcolor))
-    embed.set_image(jsdata['link'])
-    await channel.send(embed=embed)
-  
-  elif message.content.startswith(prefix + "img panda"):
-    channel = message.channel
+    embed.set_image(url=(jsdata['link']))
+    await ctx.send(embed=embed)
+  elif something == "panda":
     jdat = (http.request('GET', 'https://some-random-api.ml/img/panda'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     embed=discord.Embed(title=("p a n d a"), description=("kittens & adult kittens"), color=(botcolor))
     embed.set_image(url=(jsdata['link']))
-    await channel.send(embed=embed)
-
-  elif message.content.startswith(prefix + "img red panda"):
-    channel = message.channel
+    await ctx.send(embed=embed)
+  elif something == "red_panda":
     jdat = (http.request('GET', 'https://some-random-api.ml/img/red_panda'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     embed=discord.Embed(title=("red panda :)"), description=(""), color=(botcolor))
     embed.set_image(url=(jsdata['link']))
-    await channel.send(embed=embed)
-
-  elif message.content.startswith(prefix + "img bird"):
-    channel = message.channel
+    await ctx.send(embed=embed)
+  elif something == "bird":
     jdat = (http.request('GET', 'https://some-random-api.ml/img/birb'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     embed=discord.Embed(title=("*bird sounds.mp3*"), description=(""), color=(botcolor))
     embed.set_image(url=(jsdata['link']))
-    await channel.send(embed=embed)
-
-  elif message.content.startswith(prefix + "img fox"):
-    channel = message.channel
+    await ctx.send(embed=embed)
+  elif something == "fox":
     jdat = (http.request('GET', 'https://some-random-api.ml/img/fox'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     embed=discord.Embed(title=("Finnegan Fox aproves it."), description=("(I think)"), color=(botcolor))
     embed.set_image(url=(jsdata['link']))
-    await channel.send(embed=embed)
-
-  elif message.content.startswith(prefix + "img koala"):
-    channel = message.channel
+    await ctx.send(embed=embed)
+  elif something == "koala":
     jdat = (http.request('GET', 'https://some-random-api.ml/img/koala'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     embed=discord.Embed(title=("a"), description=(""), color=(botcolor))
     embed.set_image(url=(jsdata['link']))
-    await channel.send(embed=embed)
+    await ctx.send(embed=embed)
 
-
-
-  elif message.content.startswith(prefix + "fact cat"):
-    channel = message.channel
+@bot.command()
+async def fact(ctx, factstuff):
+  if factstuff == "cat":
     jdat = (http.request('GET', 'https://catfact.ninja/fact'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     embed=discord.Embed(title=("Did you know..."), description=(jsdata['fact']), color=(botcolor))
-    await channel.send(embed=embed)
+    await ctx.send(embed=embed)
 
-
-  elif message.content.startswith(prefix + "chucknorris.io"):
-    channel = message.channel
+@bot.command()
+async def chucknorris(ctx):
     jdat = (http.request('GET', 'https://api.chucknorris.io/jokes/random'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     embed=discord.Embed(title=(jsdata['value']), url=(jsdata['url']), description=(""), color=(botcolor))
     embed.set_thumbnail(url=(jsdata['icon_url']))
-    await channel.send(embed=embed)
+    await ctx.send(embed=embed)
   
-  elif message.content.startswith(prefix + "hug"):
-    channel = message.channel
+@bot.command()
+async def hug(ctx):
     jdat = (http.request('GET', 'https://some-random-api.ml/animu/hug'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
-    await channel.send(jsdata['link'])
+    await ctx.send(jsdata['link'])
 
-
-  elif message.content.startswith(prefix + "meme meme"):
-    channel = message.channel
+@bot.command()
+async def meme(ctx, whatm):
+  if whatm == "meme":
     jdat = (http.request('GET', 'https://some-random-api.ml/meme'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     embed=discord.Embed(title=(jsdata['caption']), description=(""), color=(botcolor))
-    embed.set_image(url=(jsdata['image']))
-    await channel.send(embed=embed)
-
-  elif message.content.startswith(prefix + "meme reddit"):
-    channel = message.channel
+    embed.set_image(jsdata['image'])
+    await ctx.send(embed=embed)
+  elif whatm == "reddit":
     jdat = (http.request('GET', 'https://meme-api.herokuapp.com/gimme'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     if jsdata['nsfw'] == "true":
       embed=discord.Embed(title=("This meme is NSFW"), description=("We're going to reload this command, sorry for the incombinient."), color=(botcolor))
-      await channel.send(embed=embed)
-      await channel.send(prefix + "meme reddit")
+      await ctx.send(embed=embed)
+      await ctx.send(prefix + "meme reddit")
     else:
       #Embed
       embed_two=discord.Embed(title=(jsdata['title']), url=(jsdata['postLink']), description=(""), color=(botcolor))
@@ -201,82 +178,81 @@ async def on_message(message):
       embed_two.set_thumbnail(url="https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png")
       embed_two.add_field(name="Posted by:", value=("u/" + jsdata['author']), inline=(True))
       embed_two.add_field(name="Subreddit:", value=("r/" + jsdata['subreddit']), inline=(True))
-      embed_two.set_image(url=(jsdata['url']))
-      await channel.send(embed=embed_two)
+      embed_two.set_image(jsdata['url'])
+      await ctx.send(embed=embed_two)
+
+@bot.command()
+async def invite(ctx):
+  await ctx.send("You can invite me to your server clicking in this link: https://apicord.github.io/invite")
+
+@bot.command()
+async def about(ctx):
+  embed=discord.Embed(title=("APIcord Alpha 2"), description=("Credits"), color=(botcolor))
+  embed.add_field(name=("Creator and programmer"), value=("LT#5266"), inline=(False))
+  embed.add_field(name=("APIs"), value=("used in this project"), inline=(False))
+  embed.add_field(name=(prefix + "img coffee"), value=("Coffee API by Alex Flipnote"), inline=(True))
+  embed.add_field(name=(prefix + "img dog"), value=("Dog API by Elliott Landsborough, Eduard Moya & Kathie Wu"), inline=(True))
+  embed.add_field(name=(prefix + "fact cat"), value=("Cat Facts API (catfact.ninja)"), inline=(True))
+  embed.add_field(name=(prefix + "meme reddit"), value=("Meme API by Dev Daksan"), inline=(True))
+  embed.add_field(name=(prefix + "Some Random Api"), value=("by Seif Mansour, Taka Inzori, Excigma & Telk"), inline=(False))
+  embed.add_field(name=(prefix + "Some Random Api"), value=("by Seif Mansour, Taka Inzori, Excigma & Telk"), inline=(True))
+  embed.add_field(name=("Commands"), value=("img cat, " + prefix + "img panda, " + prefix + "img red panda " + prefix + "img bird, " + prefix + "img fox, " + prefix + "img koala, " + prefix + "meme meme & " + prefix + "hug"), inline=(True))
+  await ctx.send(embed=embed)
+
+@bot.command()
+async def license(ctx):
+  embed=discord.Embed(title=("APIcord Licenses"), description=(""), color=(botcolor))
+  embed.add_field(name=("APIcord"), value=("Boost Software License 1.0"), inline=(True))
+  embed.add_field(name=("Coffee API"), value=("MIT License (© 2020 AlexFlipnote)"), inline=(True))
+  embed.add_field(name=("Dog CEO Image Library"), value=("GNU General Public License v3.0"), inline=(True))
+  embed.add_field(name=("Meme API"), value=("MIT License (© 2020 Dev Daksan P S)"), inline=(True))
+  embed.add_field(name=("Some Random Api (SRA)"), value=("Apache License 2.0"))
+  await ctx.send(embed=embed)
+
+@bot.command()
+async def privacy(ctx):
+  await ctx.send("https://apicord.github.io/privacy")
+
+@bot.command()
+async def code(ctx):
+  await ctx.send("https://github.com/L64/APIcord")
+
+@bot.command()
+async def say(ctx, yourmessage):
+  await ctx.send(yourmessage)
+
+@bot.command()
+async def botstats(ctx):
+  embed=discord.Embed(title=("Bot stats"), description="", color=botcolor)
+  embed.add_field(name=("Bot used in"), value=(f"{len(bot.guilds)} servers"), inline=(True))
+  await ctx.send(embed=embed)
 
 
-  elif message.content.startswith(prefix + "invite"):
-    channel = message.channel
-    await channel.send("You can invite me to your server clicking in this link: https://apicord.github.io/invite")
-
-
-  elif message.content.startswith(prefix + "about"):
-    channel = message.channel
-    embed=discord.Embed(title=("APIcord Alpha 1.2"), description=("Credits"), color=(botcolor))
-    embed.add_field(name=("Creator and programmer"), value=("LT#5266"), inline=(False))
-    embed.add_field(name=("APIs"), value=("used in this project"), inline=(False))
-    embed.add_field(name=(prefix + "img coffee"), value=("Coffee API by Alex Flipnote"), inline=(True))
-    embed.add_field(name=(prefix + "img dog"), value=("Dog API by Elliott Landsborough, Eduard Moya & Kathie Wu"), inline=(True))
-    embed.add_field(name=(prefix + "fact cat"), value=("Cat Facts API (catfact.ninja)"), inline=(True))
-    embed.add_field(name=(prefix + "meme reddit"), value=("Meme API by Dev Daksan"), inline=(True))
-    embed.add_field(name=("Some Random Api"), value=("by Seif Mansour, Taka Inzori, Excigma & Telk"), inline=(False))
-    embed.add_field(name=("Commands"), value=(prefix + "img cat, " + prefix + "img panda, " + prefix + "img red panda " + prefix + "img bird, " + prefix + "img fox, " + prefix + "img koala & " + prefix + "meme meme"), inline=(True))
-    await channel.send(embed=embed)
-
-
-  elif message.content.startswith(prefix + "license"):
-    channel = message.channel
-    embed=discord.Embed(title=("APIcord Licenses"), description=(""), color=(botcolor))
-    embed.add_field(name=("APIcord"), value=("Boost Software License 1.0"), inline=(True))
-    embed.add_field(name=("Coffee API"), value=("MIT License (© 2020 AlexFlipnote)"), inline=(True))
-    embed.add_field(name=("Dog CEO Image Library"), value=("GNU General Public License v3.0"), inline=(True))
-    embed.add_field(name=("Meme API"), value=("MIT License (© 2020 Dev Daksan P S)"), inline=(True))
-    embed.add_field(name=("Some Random Api (SRA)"), value=("Apache License 2.0"))
-    await channel.send(embed=embed)
-
-
-  elif message.content.startswith(prefix + "privacy"):
-    channel = message.channel
-    await channel.send("https://apicord.github.io/privacy")
-
-
-  elif message.content.startswith(prefix + "code"):
-    channel = message.channel
-    await channel.send("https://github.com/L64/APIcord")
-
-
-
-  elif message.content.startswith(prefix + "polking"):
-    channel = message.channel
-    await channel.send("Bot recomendado: **MonsterWorld**")
-    await channel.send("https://discord.com/oauth2/authorize?client_id=756602085298143412&scope=bot&permissions=2147483647")
-  elif message.content.startswith(prefix + "egg"):
-    channel = message.channel
-    await channel.send("🥚")
-  elif message.content.startswith(prefix + "bigF"):
-    channel = message.channel
-    await channel.send("FFFFFFFFFF")
-    await channel.send("FFFFFFFFFF")
-    await channel.send("FFF")
-    await channel.send("FFFFFF")
-    await channel.send("FFFFFF")
-    await channel.send("FFF")
-    await channel.send("FFF")
-    await channel.send("FFF")
-  elif message.content.startswith(prefix + "reeeeee"):
-    channel = message.channel
-    await channel.send("https://i.ytimg.com/vi/725L5OrDr4k/maxresdefault.jpg")
-    await channel.send("**REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE**")
-    await channel.send("thanks to https://www.youtube.com/channel/UCWhzDk_bUwar8JaRpRhm9jg for the image and Matt Furie for Pepe the frog")
-  elif message.content.startswith(prefix + "discord extreme list"):
-    channel = message.channel
-    await channel.send("Discord Extreme List, i don't know who is but, sounds like a nice name :)")
-  elif message.content.startswith(prefix + "del"):
-    channel = message.channel
-    await channel.send("Discord Extreme List, i don't know who is but, sounds like a nice name :)")
-  elif message.content.startswith(prefix + "DEL"):
-    channel = message.channel
-    await channel.send("Discord Extreme List, i don't know who is but, sounds like a nice name :)")
+@bot.command()
+async def polking(ctx):
+  await ctx.send("Bot recomendado: **MonsterWorld**")
+  await ctx.send("https://discord.com/oauth2/authorize?client_id=756602085298143412&scope=bot&permissions=2147483647")
+@bot.command()
+async def egg(ctx):
+  await ctx.send('🥚')
+@bot.command()
+async def BigF(ctx):
+  await ctx.send("FFFFFFFFFF")
+  await ctx.send("FFFFFFFFFF")
+  await ctx.send("FFF")
+  await ctx.send("FFFFFF")
+  await ctx.send("FFFFFF")
+  await ctx.send("FFF")
+  await ctx.send("FFF")
+  await ctx.send("FFF")
+@bot.command()
+async def reeeeee(ctx):
+    await ctx.send("https://i.ytimg.com/vi/725L5OrDr4k/maxresdefault.jpg")
+    await ctx.send("**REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE**")
+    await ctx.send("thanks to https://www.youtube.com/channel/UCWhzDk_bUwar8JaRpRhm9jg for the image and Matt Furie for Pepe the frog")
+@bot.command()
+async def DEL(ctx):
+  await ctx.send("Discord Extreme List, i don't know who is but, sounds like a nice name :)")
 keep_alive.keep_alive()
 bot.run(token)
 # I don't know how to make a totally functional bot ._.
