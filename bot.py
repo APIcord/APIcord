@@ -9,7 +9,7 @@ import keep_alive
 
 
 # Token and prefix
-token = ("NzU3MjU4Mjk4NzI1NjMwMDA4.X2dxvw.Hrue3XufnOHu--H9inBseSL-by0")
+token = ("[token]")
 prefix = ("api!")
 # Color chooser
 color = ("red")
@@ -277,16 +277,6 @@ async def on_message(message):
   elif message.content.startswith(prefix + "DEL"):
     channel = message.channel
     await channel.send("Discord Extreme List, i don't know who is but, sounds like a nice name :)")
-  #elif message.content.startswith(prefix + "mine turtle#0001"):
-    #channel = message.channel
-    #await channel.send('mine turtle#0001 spams "SPEDS SPEDS SPEDS')
-    #await channel.send('SPEDS SPEDS SPEDS')
-    #await channel.send('SPEDS SPEDS SPEDS"')
-    #await channel.send('and says "f*** f*** f***')
-    #await channel.send('f*** f*** f***')
-    #await channel.send('f*** f*** f***""')
-  #elif message.content.startswith(prefix + "muffin#0001")
-    #await channel.send(prefix + "muffin#0001")
 keep_alive.keep_alive()
 bot.run(token)
 # I don't know how to make a totally functional bot ._.
