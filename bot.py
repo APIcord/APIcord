@@ -56,7 +56,7 @@ async def nice(ctx):
 async def commands(ctx):
   embed=discord.Embed(title="APIcord", description="Help", color=botcolor)
   embed.add_field(name=prefix + "chucknorris", value="Random Chuck Norris Joke", inline=True)
-  embed.add_field(name=prefix + "say", value="The bot says 1 word for you", inline=True)
+  embed.add_field(name=prefix + "say", value="The bot something for you", inline=True)
   embed.add_field(name=prefix + "hug", value="A hug, for you, my friend", inline=True)
   embed.add_field(name="Meme commands", value=prefix + "meme", inline=False)
   embed.add_field(name=prefix + "meme meme", value="Random meme", inline=True)
@@ -105,7 +105,7 @@ async def img(ctx, something):
   elif something == "panda":
     jdat = (http.request('GET', 'https://some-random-api.ml/img/panda'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
-    embed=discord.Embed(title=("p a n d a"), description=("kittens & adult kittens"), color=(botcolor))
+    embed=discord.Embed(title=("p a n d a"), description=(""), color=(botcolor))
     embed.set_image(url=(jsdata['link']))
     await ctx.send(embed=embed)
   elif something == "red_panda":
@@ -132,6 +132,8 @@ async def img(ctx, something):
     embed=discord.Embed(title=("a"), description=(""), color=(botcolor))
     embed.set_image(url=(jsdata['link']))
     await ctx.send(embed=embed)
+  else:
+    await ctx.send("error, please put a valid command")
 
 @bot.command()
 async def fact(ctx, factstuff):
@@ -140,6 +142,10 @@ async def fact(ctx, factstuff):
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     embed=discord.Embed(title=("Did you know..."), description=(jsdata['fact']), color=(botcolor))
     await ctx.send(embed=embed)
+  elif factstuff == "DEL":
+    await ctx.send("Discord Extreme List, i don't know who is but, sounds like a nice name :)")
+  else:
+    await ctx.send("error, please put a valid command")
 
 @bot.command()
 async def chucknorris(ctx):
@@ -179,6 +185,8 @@ async def meme(ctx, memetype):
       embed_two.add_field(name="Subreddit:", value=("r/" + jsdata['subreddit']), inline=(True))
       embed_two.set_image(url=jsdata['url'])
       await ctx.send(embed=embed_two)
+  else:
+    await ctx.send("error, please put a valid command")
 
 @bot.command()
 async def invite(ctx):
@@ -186,15 +194,14 @@ async def invite(ctx):
 
 @bot.command()
 async def about(ctx):
-  embed=discord.Embed(title=("APIcord Alpha 2.1"), description=("Credits"), color=(botcolor))
+  embed=discord.Embed(title=("APIcord Alpha 2.1 -> 2.2"), description=("Credits"), color=(botcolor))
   embed.add_field(name=("Creator and programmer"), value=("LT#5266"), inline=(False))
   embed.add_field(name=("APIs"), value=("used in this project"), inline=(False))
   embed.add_field(name=(prefix + "img coffee"), value=("Coffee API by Alex Flipnote"), inline=(True))
   embed.add_field(name=(prefix + "img dog"), value=("Dog API by Elliott Landsborough, Eduard Moya & Kathie Wu"), inline=(True))
   embed.add_field(name=(prefix + "fact cat"), value=("Cat Facts API (catfact.ninja)"), inline=(True))
   embed.add_field(name=(prefix + "meme reddit"), value=("Meme API by Dev Daksan"), inline=(True))
-  embed.add_field(name=(prefix + "Some Random Api"), value=("by Seif Mansour, Taka Inzori, Excigma & Telk"), inline=(False))
-  embed.add_field(name=(prefix + "Some Random Api"), value=("by Seif Mansour, Taka Inzori, Excigma & Telk"), inline=(True))
+  embed.add_field(name=("Some Random Api"), value=("by Seif Mansour, Taka Inzori, Excigma & Telk"), inline=(False))
   embed.add_field(name=("Commands"), value=("img cat, " + prefix + "img panda, " + prefix + "img red panda " + prefix + "img bird, " + prefix + "img fox, " + prefix + "img koala, " + prefix + "meme meme & " + prefix + "hug"), inline=(True))
   embed.set_footer(text="Thanks to Polking to follow the development and Discord Extreme List guys for some help")
   await ctx.send(embed=embed)
@@ -218,8 +225,13 @@ async def code(ctx):
   await ctx.send("https://github.com/L64/APIcord")
 
 @bot.command()
-async def say(ctx, yourmessage):
-  await ctx.send(yourmessage)
+async def say(ctx, *, yourmessage):
+  if yourmessage == "reeeeee":
+    await ctx.send("**REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE**")
+  elif yourmessage == "BigF":
+    await ctx.send("FFFFFFFFFF \n FFFFFFFFFF \n FFF \n FFFFFF \n FFFFFF \n FFF \n FFF \n FFF")
+  else:
+    await ctx.send(yourmessage)
 
 @bot.command()
 async def botstats(ctx):
@@ -236,20 +248,11 @@ async def polking(ctx):
 async def egg(ctx):
   await ctx.send('🥚')
 @bot.command()
-async def BigF(ctx):
-  await ctx.send("FFFFFFFFFF \n FFFFFFFFFF \n FFF \n FFFFFF \n FFFFFF \n FFF \n FFF \n FFF")
-@bot.command()
 async def SmolF(ctx):
   await ctx.send("**f** (:-) aww, a small F, this is cute uwu)")
 @bot.command()
-async def reeeeee(ctx):
-  await ctx.send("**REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE**")
-@bot.command()
 async def thereisanimpostoramongus(ctx):
-  await ctx.send("**ඞ There is an impostor among us ඞ**")
-@bot.command()
-async def DEL(ctx):
-  await ctx.send("Discord Extreme List, i don't know who is but, sounds like a nice name :)")
+  await ctx.send("**ඞ There is 1 impostor among us ඞ**")
 keep_alive.keep_alive()
 bot.run(token)
 # I don't know how to make a totally functional bot ._.
