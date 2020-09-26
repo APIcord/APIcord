@@ -21,3 +21,4 @@ This bot is running in Discord 24/7 in a official "instance", this is disponible
 <li><a href="#">bots.gg [Checking]</a></li>
 <li><a href="#">Bots on Discord [Checking]</a></li>
 <li><a href="#">Top.gg [Checking]</a></li>
+<li><a href="https://apicord.github.io/invite">Here</a></li>
