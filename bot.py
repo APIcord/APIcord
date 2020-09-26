@@ -56,11 +56,14 @@ async def nice(ctx):
 async def commands(ctx):
   embed=discord.Embed(title="APIcord", description="Help", color=botcolor)
   embed.add_field(name=prefix + "chucknorris", value="Random Chuck Norris Joke", inline=True)
-  embed.add_field(name=prefix + "say", value="The bot something for you", inline=True)
+  embed.add_field(name=prefix + "say <words>", value="The bot something for you", inline=True)
   embed.add_field(name=prefix + "hug", value="A hug, for you, my friend", inline=True)
+  embed.add_field(name=prefix + "delete <amount>", value="Delete message", inline=True)
+  embed.add_field(name=prefix + "purge <amount>", value="Delete message", inline=True)
   embed.add_field(name="Meme commands", value=prefix + "meme", inline=False)
   embed.add_field(name=prefix + "meme meme", value="Random meme", inline=True)
   embed.add_field(name=prefix + "meme reddit", value="Random Reddit meme", inline=True)
+  embed.add_field(name=prefix + "meme generator", value="Meme generator help command", inline=True)
   embed.add_field(name="Image commands", value=prefix + "img", inline=False)
   embed.add_field(name=prefix + "img coffee", value="Random coffee image", inline=True)
   embed.add_field(name=prefix + "img dog", value="Random dog image", inline=True)
@@ -79,7 +82,7 @@ async def commands(ctx):
   embed.add_field(name=prefix + "privacy", value="Bot Privacy Policy", inline=True)
   embed.add_field(name=prefix + "code", value="Source code", inline=True)
   embed.add_field(name=prefix + "commands", value="Displays commands", inline=True)
-  embed.add_field(name=prefix + "botstats", value="Bot stas", inline=True)
+  embed.add_field(name=prefix + "botstats", value="Bot stats", inline=True)
   await ctx.send(embed=embed)
 
 @bot.command()
@@ -136,6 +139,23 @@ async def img(ctx, something):
     await ctx.send("error, please put a valid command")
 
 @bot.command()
+async def gmeme(ctx, image, top_text, bottom_text):
+  if image.endswith(".jpg"):
+    img_type = ".jpg"
+  elif image.endswith(".jpeg"):
+    img_type = ".jpeg"
+  elif image.endswith(".webp"):
+    img_type = ".webp"
+  elif image.endswith(".png"):
+    img_type = ".png"
+  else:
+    await ctx.send("error, image type not found")
+  generating_meme=("https://api.memegen.link/images/custom/" + top_text + "/" + bottom_text + "." + img_type + "?background=" + image)
+  display_image=discord.Embed(title="Your meme is ready!", description="", color=botcolor)
+  display_image.set_image(url=generating_meme)
+  await ctx.send(embed=display_image)
+
+@bot.command()
 async def fact(ctx, factstuff):
   if factstuff == "cat":
     jdat = (http.request('GET', 'https://catfact.ninja/fact'))
@@ -185,6 +205,12 @@ async def meme(ctx, memetype):
       embed_two.add_field(name="Subreddit:", value=("r/" + jsdata['subreddit']), inline=(True))
       embed_two.set_image(url=jsdata['url'])
       await ctx.send(embed=embed_two)
+  elif memetype == "generator":
+    embed=discord.Embed(title=("MeMe gEnErAtOr!!!"), description=("yay"), color=(botcolor))
+    embed.add_field(name="How to use?", value="Type " + prefix + "gmeme <template url> <top text> <bottom text>", inline=True)
+    embed.add_field(name="Writing your meme", value="You can't type you meme just like that, if you like have characters like the '?' or the space ' ' you need to put special characters the guide will be here: https://git.io/JUrSj", inline=True)
+    embed.add_field(name="Image types supported", value="Currently are allowed '.jpg', '.jpeg', '.webp' and '.png'")
+    await ctx.send(embed=embed)
   else:
     await ctx.send("error, please put a valid command")
 
@@ -194,13 +220,14 @@ async def invite(ctx):
 
 @bot.command()
 async def about(ctx):
-  embed=discord.Embed(title=("APIcord Alpha 2.1 -> 2.2"), description=("Credits"), color=(botcolor))
+  embed=discord.Embed(title=("APIcord Alpha 2.3"), description=("Credits"), color=(botcolor))
   embed.add_field(name=("Creator and programmer"), value=("LT#5266"), inline=(False))
   embed.add_field(name=("APIs"), value=("used in this project"), inline=(False))
   embed.add_field(name=(prefix + "img coffee"), value=("Coffee API by Alex Flipnote"), inline=(True))
   embed.add_field(name=(prefix + "img dog"), value=("Dog API by Elliott Landsborough, Eduard Moya & Kathie Wu"), inline=(True))
   embed.add_field(name=(prefix + "fact cat"), value=("Cat Facts API (catfact.ninja)"), inline=(True))
   embed.add_field(name=(prefix + "meme reddit"), value=("Meme API by Dev Daksan"), inline=(True))
+  embed.add_field(name=(prefix + "gmeme"), value=("memegen.link by Jace Browning"), inline=(True))
   embed.add_field(name=("Some Random Api"), value=("by Seif Mansour, Taka Inzori, Excigma & Telk"), inline=(False))
   embed.add_field(name=("Commands"), value=("img cat, " + prefix + "img panda, " + prefix + "img red panda " + prefix + "img bird, " + prefix + "img fox, " + prefix + "img koala, " + prefix + "meme meme & " + prefix + "hug"), inline=(True))
   embed.set_footer(text="Thanks to Polking to follow the development and Discord Extreme List guys for some help")
@@ -213,6 +240,7 @@ async def license(ctx):
   embed.add_field(name=("Coffee API"), value=("MIT License (© 2020 AlexFlipnote)"), inline=(True))
   embed.add_field(name=("Dog CEO Image Library"), value=("GNU General Public License v3.0"), inline=(True))
   embed.add_field(name=("Meme API"), value=("MIT License (© 2020 Dev Daksan P S)"), inline=(True))
+  embed.add_field(name=("memegen.link"), value=("MIT License (© 2020 Jace Browning)"), inline=(True))
   embed.add_field(name=("Some Random Api (SRA)"), value=("Apache License 2.0"))
   await ctx.send(embed=embed)
 
@@ -239,6 +267,17 @@ async def botstats(ctx):
   embed.add_field(name=("Bot used in"), value=(f"{len(bot.guilds)} servers"), inline=(True))
   await ctx.send(embed=embed)
 
+@bot.command()
+async def delete(ctx, the_limit: int):
+  estoy_en_la_nada = await ctx.channel.purge(limit=the_limit),
+  embed=discord.Embed(title=f"{len(estoy_en_la_nada)} messages deleted", description="", color=botcolor),
+  await ctx.send(embed=embed)
+
+@bot.command()
+async def purge(ctx, the_limit: int):
+  estoy_en_la_nada = await ctx.channel.purge(limit=the_limit),
+  embed=discord.Embed(title=f"{len(estoy_en_la_nada)} messages deleted", description="", color=botcolor),
+  await ctx.send(embed=embed)
 
 @bot.command()
 async def polking(ctx):
