@@ -15,8 +15,8 @@ Put you token in the variable "token" in bot.py and run it.
 
 ## Official bot
 This bot is running in Discord 24/7 in a official "instance", this is disponible from:
-<li><a href="https://discordextremelist.xyz/es-ES/bots/757258298725630008">Discord Extreme List (DEL) [Checking]</a></li>
-<li><a href="https://yabl.xyz/bot/757258298725630008">Yet Another Bot List (YABL) [Checking]</a></li>
-<li><a href="https://discord.bots.gg/bots/757258298725630008">bots.gg [Checking]</a></li>
-<li><a href="https://bots.ondiscord.xyz/bots/757258298725630008">Bots on Discord [Checking]</a></li>
-<li><a href="https://top.gg/bot/757258298725630008">Top.gg [Checking]</a></li>
+<li><a href="#">Discord Extreme List (DEL) [Checking]</a></li>
+<li><a href="#">Yet Another Bot List (YABL) [Checking]</a></li>
+<li><a href="#">bots.gg [Checking]</a></li>
+<li><a href="#">Bots on Discord [Checking]</a></li>
+<li><a href="#">Top.gg [Checking]</a></li>
