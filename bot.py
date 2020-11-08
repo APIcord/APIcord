@@ -289,7 +289,11 @@ async def reddit(ctx):
 
 @bot.command()
 async def meme(ctx, memetype):
-  if memetype == "generator":
+  if memetype == "meme":
+    ctx.send("Command deleted, if you want something similar, please try: " + prefix + "reddit")
+  elif memetype == "reddit":
+    ctx.send("Command moved to \"" + prefix + "reddit")
+  elif memetype == "generator":
     embed=discord.Embed(title=("MeMe gEnErAtOr!!!"), description=("*(yay!)*"), color=(botcolor))
     embed.add_field(name="How to use?", value="Type " + prefix + "gmeme <template url> <top text> <bottom text>", inline=True)
     embed.add_field(name="Writing your meme", value="You can't type you meme just like that, if you like have characters like the '?' or the space ' ' you need to put special characters the guide will be here: https://git.io/JUrSj", inline=True)
