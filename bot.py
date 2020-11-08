@@ -325,7 +325,7 @@ async def about(ctx):
   embed.add_field(name="pyTelegramBotAPI", value="by **Frank Wang and the pyTelegramBotAPI community**", inline=True)
   embed.add_field(name="urllib3", value="by **urllib3 community**", inline=True)
   embed.add_field(name="keep_alive.py", value="by **TheDrone7**", inline=True)
-  embed.add_field(name="Thanks", value="Thanks to **Polking** to follow the development, **DEL** guys for some help and **the people** to comment and suggest", inline=False)
+  embed.add_field(name="Thanks", value="Thanks to **Polking** to follow the development, **DEL** guys for some help and **the people** for comment and suggest", inline=False)
   await ctx.send(embed=embed)
 
 @bot.command()
