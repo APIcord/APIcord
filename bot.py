@@ -1,26 +1,30 @@
-import time
+import os
+#import time
+import random
 import discord
 from discord.ext import commands
+from flask import Flask, render_template
+from threading import Thread
 import json
+import os.path
 import urllib3
-import keep_alive
+# import cairosvg
 
-
-# Token and prefix
-token = ("[token]")
-prefix = ("api!")
-# Color chooser
-color = ("red")
-# Options: red, white, black, grey, blue_metalic, green, light_blue, yellow, orange_light
-
+prefix = os.getenv("PREFIX")
+color = os.getenv("COLOR")
 
 # Start stuff
 bot = commands.Bot(command_prefix=prefix, description="Discord bot focused on APIs", allowed_mentions=discord.AllowedMentions(roles=False, users=False, everyone=False))
+app = Flask("")
 embed = discord.Embed
 http = urllib3.PoolManager()
+def logsenv():
+  if os.getenv("LOGS") == "0":
+    os.system("cls" if os.name=="nt" else "clear")
+
 print("APIcord")
 print("Logs:")
-
+logsenv()
 
 # Color
 if color == ("red"):
@@ -69,7 +73,7 @@ async def help(ctx):
 @bot.command()
 async def info(ctx, category):
   if category == "meme":
-    embed=discord.Embed(title="Meme commands", description=prefix + "meme", color=botcolor)
+    embed=discord.Embed(title="Meme commands", description="", color=botcolor)
     embed.add_field(name=prefix + "reddit", value="Random Reddit meme", inline=True)
     embed.add_field(name=prefix + "meme generator", value="Meme generator help (Please read it before use it)", inline=True)
     embed.add_field(name=prefix + "gmeme <template url> <top text> <bottom text>", value="Meme generator", inline=True)
@@ -96,7 +100,8 @@ async def info(ctx, category):
     await ctx.send(embed=embed)
   elif category == "about":
     embed=discord.Embed(title="About the bot", description="No prefix", color=botcolor)
-    embed.add_field(name=prefix + "about", value="Credits", inline=True)
+    embed.add_field(name=prefix + "about", value="About this instance", inline=True)
+    embed.add_field(name=prefix + "credits", value="Credits", inline=True)
     embed.add_field(name=prefix + "license", value="License", inline=True)
     embed.add_field(name=prefix + "invite", value="Displays bot invite", inline=True)
     embed.add_field(name=prefix + "privacy", value="Bot Privacy Policy", inline=True)
@@ -187,6 +192,25 @@ async def gmeme(ctx, image, top_text, bottom_text):
   display_image=discord.Embed(title="Your meme is ready!", description="", color=botcolor)
   display_image.set_image(url=generating_meme)
   await ctx.send(embed=display_image)
+
+#@bot.command()
+#async def getitoncodeberg(ctx, *, text):
+#  cache_name = random.randint(1, 1000000000)
+#  cache_is_ok = 0
+#  def cache_search():
+#    if os.path.isfile("cache/" + str(cache_name) + ".png"):
+#      cache_is_ok = 0
+#    else:
+#      cache_is_ok = 1
+#    return
+#  cache_search()
+#  if cache_is_ok == 0:
+#    while cache_is_ok == 0:
+#      cache_search()
+#  cairosvg.svg2png(url="https://api.l64.repl.co/badges.php?type=codeberg&subtype=blue-on-white&background_color=000000&text=" + text, write_to="cache/"+ cache_name +".png")
+#  display_image=discord.Embed(title="Your meme is ready!", description="", color=botcolor)
+#  display_image.set_image(url="cache/" + cache_name + ".png")
+#  await ctx.send(embed=display_image)
 
 @bot.command()
 async def fact(ctx, factstuff):
@@ -304,17 +328,28 @@ async def meme(ctx, memetype):
 
 @bot.command()
 async def invite(ctx):
-  await ctx.send("You can invite me to your server clicking in this link: https://apicord.github.io/invite")
+  await ctx.send("You can invite me to your server clicking in this link: " + os.getenv("INVITE"))
+
+@bot.command()
+async def about(ctx):
+  embed_two=discord.Embed(title=os.getenv("NAME"), url="", description="", color=botcolor)
+  embed_two.set_thumbnail(url=os.getenv("AVATAR_URL"))
+  embed_two.add_field(name="Instance Type:", value="Discord", inline=True)
+  embed_two.add_field(name="Owner:", value=os.getenv("OWNER"), inline=True)
+  embed_two.add_field(name="Prefix:", value=os.getenv("PREFIX"), inline=True)
+  embed_two.add_field(name="Number of servers:", value=f"{len(bot.guilds)} servers", inline=True)
+  embed_two.set_footer(text="Powered by APIcord")
+  await ctx.send(embed=embed_two)
 
 @bot.command(aliases=["apicord", "cord"])
-async def about(ctx):
-  embed=discord.Embed(title=("APIcord Alpha 2.4"), description=("Credits"), color=(botcolor))
+async def credits(ctx):
+  embed=discord.Embed(title=("APIcord Alpha 3"), description=("Credits"), color=(botcolor))
   embed.add_field(name=("Creator and programmer"), value=("error#7900"), inline=(False))
   embed.add_field(name=("APIs"), value=("used in this project"), inline=(False))
   embed.add_field(name=("Coffee API"), value=("by **Alex Flipnote** \n (" + prefix + "img coffee)"), inline=(True))
   embed.add_field(name=("Dog API"), value=("by **Elliott Landsborough**, **Eduard Moya** & **Kathie Wu** \n (" + prefix + "img dog)"), inline=(True))
   embed.add_field(name=("Cat Facts API (catfact.ninja)"), value=("by **Cat Fact API creators** \n (" + prefix + "fact cat)"), inline=(True))
-  embed.add_field(name=("Meme API"), value=("by **Dev Daksan** \n (" + prefix + "meme reddit)"), inline=(True))
+  embed.add_field(name=("Meme API"), value=("by **Dev Daksan** \n (" + prefix + "reddit)"), inline=(True))
   embed.add_field(name=("memegen.link"), value=("by **Jace Browning** \n (" + prefix + "gmeme/gm)"), inline=(True))
   #embed.add_field(name=("Fun Translations API"), value=("by **Fun Translations** \n (" + prefix + "funtranslations/fun_translations/ft)"), inline=(True))
   embed.add_field(name=("chucknorris.io"), value=("by **chucknorris.io** \n (" + prefix + "chucknorris)"), inline=(True))
@@ -331,7 +366,7 @@ async def about(ctx):
 @bot.command()
 async def license(ctx):
   embed=discord.Embed(title=("APIcord Licenses"), description=(""), color=(botcolor))
-  embed.add_field(name=("APIcord"), value=("Boost Software License 1.0"), inline=(True))
+  embed.add_field(name=("APIcord"), value=("MIT License (© 2020 absucc)"), inline=(True))
   embed.add_field(name=("Coffee API"), value=("MIT License (© 2020 AlexFlipnote)"), inline=(True))
   embed.add_field(name=("Dog CEO Image Library"), value=("GNU General Public License v3.0"), inline=(True))
   embed.add_field(name=("Meme API"), value=("MIT License (© 2020 Dev Daksan P S)"), inline=(True))
@@ -341,7 +376,7 @@ async def license(ctx):
 
 @bot.command()
 async def privacy(ctx):
-  await ctx.send("https://apicord.github.io/privacy")
+  await ctx.send("https://apicord.github.io/privacy.html")
 
 @bot.command()
 async def code(ctx):
@@ -359,18 +394,19 @@ async def say(ctx, *, yourmessage):
   else:
     await ctx.send(yourmessage)
 
-@bot.command()
-async def servercounter(ctx):
-  embed=discord.Embed(title=("Bot stats"), description="", color=botcolor)
-  embed.add_field(name=("Bot used in"), value=(f"{len(bot.guilds)} servers"), inline=(True))
-  await ctx.send(embed=embed)
-
 @bot.command(aliases=["delete"])
-async def purge(ctx, the_limit: int):
-  embed=discord.Embed(title="The messages were deleted", description="", color=botcolor)
+async def purge(ctx, the_limit):
+  embed=discord.Embed(title=":wastebucket::thumbsup:", description="Made", color=botcolor)
   await ctx.channel.purge(limit=the_limit)
   await ctx.send(embed=embed)
 
+@bot.command(aliases=["hgang", "Hgang", "HGang", "H", "h", "jointhehgang"])
+async def joinhgang(ctx):
+  embed=discord.Embed(title="Join the H gang", description="██╗░░██╗\n██║░░██║\n███████║\n██╔══██║\n██║░░██║\n╚═╝░░╚═╝", color=botcolor)
+  embed.set_thumbnail(url="https://media.nertivia.net/6661602938407882752/6680595321476616192/avatar.gif")
+  embed.add_field(name="Reddit", value=("r/TheLetterH"), inline=(True))
+  embed.add_field(name="Nertivia", value=("https://nertivia.net/invites/H"), inline=(True))
+  await ctx.send(embed=embed)
 @bot.command()
 async def egg(ctx):
   await ctx.send('🥚')
@@ -380,6 +416,43 @@ async def SmolF(ctx):
 @bot.command()
 async def thereisanimposteramongus(ctx):
   await ctx.send("**ඞ There is 1 imposter among us ඞ**")
-keep_alive.keep_alive()
-bot.run(token)
+
+    
+# Webserver
+if os.getenv("REPL.IT") == "1":
+  enwebserver = True
+else:
+  if os.getenv("WEBSERVER") == "1":
+    enwebserver = True
+
+if enwebserver == True:
+  @app.errorhandler(404)
+  def error404(error):
+    logsenv()
+    return render_template("errors/404.html", **locals()),404
+  @app.errorhandler(500)
+  def error500(error):
+    logsenv()
+    return render_template("errors/500.html", **locals()),500
+
+  @app.route("/")
+  def main():
+    logsenv()
+    return render_template("index.html", **locals(), prefix=os.getenv("PREFIX"), avatar=os.getenv("AVATAR_URL"), instance_owner=os.getenv("OWNER"), guilds=f"{len(bot.guilds)}")
+  @app.route("/privacy")
+  def privacya():
+    logsenv()
+    return render_template("privacy.html", **locals())
+
+  def run():
+    app.run(host=os.getenv("HOST"), port=os.getenv("PORT"))
+
+  # Code from https://repl.it/@TheDrone7/discordpy-rewrite#keep_alive.py
+  def keep_alive():
+    server = Thread(target=run)
+    server.start()
+    logsenv()
+
+  keep_alive()
+bot.run(os.getenv("TOKEN"))
 # I don't know how to make a totally functional bot ._.

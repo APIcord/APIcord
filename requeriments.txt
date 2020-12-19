@@ -2,3 +2,4 @@ discord.py
 discord
 flask
 urllib3
+cairosvg

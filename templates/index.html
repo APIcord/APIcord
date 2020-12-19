@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta chardset="utf-8">
+    <meta name="author" content="absucc">
+    <meta name="keywords" content="Python bot,Python,Discord,Discord bot,DBL,API,APIs,API powered,Python powered,APIcord">
+    <meta name="description" content="APIcord is a line of simple bots powered by simple APIs">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Comapatible" content="id=edge">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='logo.jpeg') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+	</head>
+	<body>
+		<center>
+			<img width="100px" height="auto" src="{{avatar}}" alt="Avatar">
+			<h1>This bot is alive!</h1>
+      <p>Now you can enjoy of this <a href="https://apicord.github.io">APIcord</a> instance on your favorite chat application</p>
+      <h2>About this instance</h2>
+      <h3><b><span id="type_of_instance"><noscript>Type of instance:</noscript></span></b> Discord <i class="fa fa-discord"></i></h3>
+      <h3><b><span id="owner"><noscript>Owner:</noscript></span></b> {{instance_owner}}</h3>
+      <h3><b><span id="prefix"><noscript>Prefix:</noscript></span></b> {{prefix}}</h3>
+      <h3><b><span id="number_of_servers"><noscript>Number of servers:</noscript></span></b> {{guilds}}</h3>
+      <br>
+      <p>&copy;2020 <a href="https://lucas.codeberg.page">absucc</a> - Powered by <a href="https://apicord.github.io">APIcord</a> - <a href="https://github.com/APIcord/discord">Source code</a></p>
+		</center>
+    <script src="{{ url_for('static', filename='js/lang.js') }}"></script>
+    <script>
+      if (isSpanish==true) {
+        document.getElementById("type_of_instance").innerHTML = "Tipo de instancia:";
+        document.getElementById("owner").innerHTML = "Dueño:";
+        document.getElementById("prefix").innerHTML = "Prefix:";
+        document.getElementById("number_of_servers").innerHTML = "Número de servidores:";
+      } else {
+        document.getElementById("type_of_instance").innerHTML = "Type of instance:";
+        document.getElementById("owner").innerHTML = "Owner:";
+        document.getElementById("prefix").innerHTML = "Prefix:";
+        document.getElementById("number_of_servers").innerHTML = "Number of servers:";
+      }
+    </script>
+	</body>
+</html>
