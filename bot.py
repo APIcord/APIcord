@@ -347,7 +347,7 @@ async def about(ctx):
 
 @bot.command(aliases=["apicord", "cord"])
 async def credits(ctx):
-  embed=discord.Embed(title=("APIcord Alpha 3"), description=("Credits"), color=(botcolor))
+  embed=discord.Embed(title=("APIcord Alpha 3.0.1"), description=("Credits"), color=(botcolor))
   embed.add_field(name=("Creator and programmer"), value=("error#7900 (absucc)"), inline=(False))
   embed.add_field(name=("APIs"), value=("used in this project"), inline=(False))
   embed.add_field(name=("Coffee API"), value=("by **Alex Flipnote** \n (" + prefix + "img coffee)"), inline=(True))
