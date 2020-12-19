@@ -104,10 +104,10 @@ async def info(ctx, category):
     embed.add_field(name=prefix + "credits", value="Credits", inline=True)
     embed.add_field(name=prefix + "license", value="License", inline=True)
     embed.add_field(name=prefix + "invite", value="Displays bot invite", inline=True)
+    embed.add_field(name=prefix + "issues", value="Go to the issues page of this bot", inline=True)
     embed.add_field(name=prefix + "privacy", value="Bot Privacy Policy", inline=True)
     embed.add_field(name=prefix + "code", value="Source code", inline=True)
     embed.add_field(name=prefix + "help", value="Displays commands", inline=True)
-    embed.add_field(name=prefix + "botstats", value="Bot stats", inline=True)
     await ctx.send(embed=embed)
   elif category == "more":
     embed=discord.Embed(title="More", description="", color=botcolor)
@@ -331,6 +331,10 @@ async def invite(ctx):
   await ctx.send("You can invite me to your server clicking in this link: " + os.getenv("INVITE"))
 
 @bot.command()
+async def issues(ctx):
+  await ctx.send("https://github.com/APIcord/issues")
+
+@bot.command()
 async def about(ctx):
   embed_two=discord.Embed(title=os.getenv("NAME"), url="", description="", color=botcolor)
   embed_two.set_thumbnail(url=os.getenv("AVATAR_URL"))
@@ -344,7 +348,7 @@ async def about(ctx):
 @bot.command(aliases=["apicord", "cord"])
 async def credits(ctx):
   embed=discord.Embed(title=("APIcord Alpha 3"), description=("Credits"), color=(botcolor))
-  embed.add_field(name=("Creator and programmer"), value=("error#7900"), inline=(False))
+  embed.add_field(name=("Creator and programmer"), value=("error#7900 (absucc)"), inline=(False))
   embed.add_field(name=("APIs"), value=("used in this project"), inline=(False))
   embed.add_field(name=("Coffee API"), value=("by **Alex Flipnote** \n (" + prefix + "img coffee)"), inline=(True))
   embed.add_field(name=("Dog API"), value=("by **Elliott Landsborough**, **Eduard Moya** & **Kathie Wu** \n (" + prefix + "img dog)"), inline=(True))
@@ -353,7 +357,7 @@ async def credits(ctx):
   embed.add_field(name=("memegen.link"), value=("by **Jace Browning** \n (" + prefix + "gmeme/gm)"), inline=(True))
   #embed.add_field(name=("Fun Translations API"), value=("by **Fun Translations** \n (" + prefix + "funtranslations/fun_translations/ft)"), inline=(True))
   embed.add_field(name=("chucknorris.io"), value=("by **chucknorris.io** \n (" + prefix + "chucknorris)"), inline=(True))
-  embed.add_field(name=("Some Random Api"), value=("by **Seif Mansour**, **Taka Inzori**, **Excigma** & **Telk** \n (" + prefix + "img cat, " + prefix + "img panda, " + prefix + "img red panda " + prefix + "img bird, " + prefix + "img fox, " + prefix + "img koala, " + prefix + "hug " + prefix + "fact dog, " + prefix + "fact panda, " + prefix + "fact fox, " + prefix + "fact bird & " + prefix + "fact koala)"), inline=(False))
+  embed.add_field(name=("Some Random Api"), value=("by **Seif Mansour**, **Taka Inzori**, **Excigma** & **Telk** \n (" + prefix + "img cat, " + prefix + "img panda, " + prefix + "img red panda, " + prefix + "img bird, " + prefix + "img fox, " + prefix + "img koala, " + prefix + "hug, " + prefix + "fact dog, " + prefix + "fact panda, " + prefix + "fact fox, " + prefix + "fact bird & " + prefix + "fact koala)"), inline=(False))
   embed.add_field(name="Libraries", value="used", inline=False)
   embed.add_field(name="discord.py", value="by **Rapptz and the discord.py community**", inline=True)
   embed.add_field(name="python-telegram-bot", value="by **python-telegram-bot community**", inline=True)
@@ -455,4 +459,3 @@ if enwebserver == True:
 
   keep_alive()
 bot.run(os.getenv("TOKEN"))
-# I don't know how to make a totally functional bot ._.
