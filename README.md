@@ -8,7 +8,7 @@
 - [and more!!!](https://some-random-api.ml)
 
 ## Ideas
-- Coronavirus Counter (Maybe)
+- [Explain xkcd](https://www.explainxkcd.com/wiki/index.php/Main_Page)
 - date
 
 ## Instalation
