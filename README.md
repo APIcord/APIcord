@@ -12,7 +12,7 @@
 - date
 
 ## Instalation
-Put you token in the variable "token" in bot.py and run it.
+Put you token in the variable "TOKEN" in .env and run it. (I recommend configuring it fully)
 
 ## Official bot
 This bot is running in Discord 24/7 in a official "instance", this is disponible from:
