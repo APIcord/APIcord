@@ -555,13 +555,13 @@ if enwebserver == True:
 
   def run():
     app.run(host=host_flask, port=port_flask)
-    return logsenv()
+    logsenv()
 
   # Code from https://repl.it/@TheDrone7/discordpy-rewrite#keep_alive.py
   def keep_alive():
     server = Thread(target=run)
     server.start()
-    return logsenv()
+    logsenv()
 
   keep_alive()
 bot.run(os.getenv("TOKEN"))
