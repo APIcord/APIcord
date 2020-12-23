@@ -1,4 +1,6 @@
 import os
+from colorama import init, Fore, Back, Style
+from blessings import Terminal
 #import time
 import random
 import discord
@@ -10,20 +12,38 @@ import os.path
 import urllib3
 # import cairosvg
 
+__version__ = "Alpha 3.1.1"
 prefix = os.getenv("PREFIX")
 color = os.getenv("COLOR")
 
 # Start stuff
+init()
+tb = Terminal()
 bot = commands.Bot(command_prefix=prefix, description="Discord bot focused on APIs", allowed_mentions=discord.AllowedMentions(roles=False, users=False, everyone=False))
 app = Flask("")
 embed = discord.Embed
 http = urllib3.PoolManager()
+def ascii():
+  print(f"""{Fore.RED}yyyyyyyyyyyyyyyyyyyy
+yyyyyyyyyyyyyyyyyyyy
+yyyy{Fore.WHITE}:          :{Fore.RED}yyyy
+yyyy{Fore.WHITE}. /s`:o+:::.{Fore.RED}hhyy
+yyyy{Fore.WHITE}. s+-:o/o//.{Fore.RED}hhhh {Fore.WHITE}""" + tb.bold("APIcord") + f""" ({Style.RESET_ALL}by absucc){Fore.RED}
+yyyy{Fore.WHITE}.-s++:o. //.{Fore.RED}hhhh {Fore.GREEN}ASCII art powered by{Fore.RED}
+yyyy{Fore.WHITE}.-.`/-:  .-.{Fore.RED}hhhh {Fore.GREEN}TEXT-IMAGE.com & Colorama{Fore.RED}
+yyyy{Fore.WHITE}.`/:.....::+{Fore.RED}hhhh
+yyyy{Fore.WHITE}oy{Fore.RED}hhhhhhhyyhhhhh
+yyyyyyhhhhhhhhhhhhhh {Style.RESET_ALL}v{__version__}
+{Style.RESET_ALL}""")
+#prefix=os.getenv("PREFIX"), avatar=os.getenv("AVATAR_URL"), instance_name=os.getenv("NAME"), instance_owner=os.getenv("OWNER"), guilds=f"{len(bot.guilds)}"
 def logsenv():
   if os.getenv("LOGS") == "0":
     os.system("cls" if os.name=="nt" else "clear")
+    ascii()
+  print(Style.RESET_ALL)
 
-print("APIcord")
-print("Logs:")
+ascii()
+print(f"{Back.WHITE}{Fore.BLACK}---- LOGS ----")
 logsenv()
 
 # Color
@@ -495,12 +515,19 @@ async def thereisanimposteramongus(ctx):
   await ctx.send("**ඞ There is 1 imposter among us ඞ**")
 
     
-# Webserver
+# WEBSERVER
 if os.getenv("REPL.IT") == "1":
   enwebserver = True
+  host_flask = "0.0.0.0"
+  if os.getenv("PORT") == "80":
+    port_flask = "5000"
+  else:
+    port_flask = os.getenv("PORT")
 else:
   if os.getenv("WEBSERVER") == "1":
     enwebserver = True
+    host_flask = os.getenv("HOST")
+    port_flask = os.getenv("PORT")
 
 if enwebserver == True:
   @app.errorhandler(404)
@@ -515,14 +542,14 @@ if enwebserver == True:
   @app.route("/")
   def main():
     logsenv()
-    return render_template("index.html", **locals(), prefix=os.getenv("PREFIX"), avatar=os.getenv("AVATAR_URL"), instance_owner=os.getenv("OWNER"), guilds=f"{len(bot.guilds)}")
+    return render_template("index.html", **locals(), prefix=os.getenv("PREFIX"), avatar=os.getenv("AVATAR_URL"), instance_name=os.getenv("NAME"), instance_owner=os.getenv("OWNER"), guilds=f"{len(bot.guilds)}")
   @app.route("/privacy")
   def privacya():
     logsenv()
     return render_template("privacy.html", **locals())
 
   def run():
-    app.run(host=os.getenv("HOST"), port=os.getenv("PORT"))
+    app.run(host=host_flask, port=port_flask)
 
   # Code from https://repl.it/@TheDrone7/discordpy-rewrite#keep_alive.py
   def keep_alive():
