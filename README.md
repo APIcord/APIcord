@@ -10,11 +10,15 @@
 ## Installation
 1. Create an application on the [Discord Developer Portal](https://discord.com/developers)
 2. Create a bot for that application, copy the token
-3. Install the requeriments (Not obligatory for Repl.it users)
-    - ` pip install -r requirements.txt `
-4. Complete [.env.example](.env.example), then copy the content
-5. Create a ".env" file and paste the data
-6. Run it
+3. Complete [.env.example](.env.example), then copy the content
+4. Create a ".env" file and paste the data
+5. Install the requeriments (Repl.it users only press the "Run" button) and run it
+    - You do this:
+    ```
+    pip install -r requirements.txt
+    python bot.py
+    ```
+    - Or you can run "install_n_run.bat" (for Windows) or "install_n_run.sh" (for Linux and Mac)
 
 ## Official bot
 This bot is running in Discord 24/7 in a official "instance", this is disponible from:
