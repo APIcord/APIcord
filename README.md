@@ -14,10 +14,10 @@
 4. Create a ".env" file and paste the data
 5. Install the requeriments (Repl.it users only press the "Run" button) and run it
     - You do this:
-    ```
-    pip install -r requirements.txt
-    python bot.py
-    ```
+        ```
+        pip install -r requirements.txt
+        python bot.py
+        ```
     - Or you can run "install_n_run.bat" (for Windows) or "install_n_run.sh" (for Linux and Mac)
 
 ## Official bot
