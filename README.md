@@ -7,11 +7,6 @@
 - [Meme generator](https://memegen.link)
 - [and more!!!](https://some-random-api.ml)
 
-## Ideas
-- [Explain xkcd](https://www.explainxkcd.com/wiki/index.php/Main_Page)
-- date
-Want to colaborate with ideas? [Leave an issue!](https://github.com/APIcord/discord/issues/new/choose) and tag it with the "<span style="background-color: #FBCA04; border-radius: 10px;">idea</span>" tag
-
 ## Instalation
 1. Create an application on the [Discord Developer Portal](https://discord.com/developers)
 2. Create a bot for that application, copy the token
@@ -25,6 +20,11 @@ This bot is running in Discord 24/7 in a official "instance", this is disponible
 - [Discord Bots (bots.gg)](https://discord.bots.gg/bots/757258298725630008)
 - [Discord Bot List / Top.gg / DBL](https://top.gg/bot/757258298725630008)
 - [Here](https://apicord.github.io/invite)
+
+## Ideas
+- [Explain xkcd](https://www.explainxkcd.com/wiki/index.php/Main_Page)
+- date
+Want to colaborate with ideas? [Leave an issue!](https://github.com/APIcord/discord/issues/new/choose) and tag it with the "[idea](https://github.com/APIcord/discord/issues?q=is%3Aissue+is%3Aopen+label%3Aidea)" tag
 
 ## Want to see older versions
 - Alpha1 - 2.4 are branches
