@@ -1,5 +1,4 @@
 # [API](https://en.wikipedia.org/wiki/API)[cord](https://en.wikipedia.org/wiki/Discord_(software)) Discord [![Run on Repl.it](https://repl.it/badge/github/APIcord/discord)](https://repl.it/github/APIcord/discord)
-
 ## Features
 - [Coffee Images](https://coffee.alexflipnote.dev)
 - [Dog Images](https://dog.ceo/dog-api)
@@ -8,12 +7,12 @@
 - [Meme generator](https://memegen.link)
 - [and more!!!](https://some-random-api.ml)
 
-## Installation
-1. Create an application on the [Discord Developer Portal](https://discord.com/developers)
-2. Create a bot for that application, copy the token
-3. Complete [.env.example](.env.example)
-4. Change the name of .env.example to .env
-5. Run it
+## Ideas
+- Coronavirus Counter (Maybe)
+- date
+
+## Instalation
+Put you token in the variable "token" in bot.py and run it.
 
 ## Official bot
 This bot is running in Discord 24/7 in a official "instance", this is disponible from:
@@ -21,13 +20,3 @@ This bot is running in Discord 24/7 in a official "instance", this is disponible
 - [Discord Bots (bots.gg)](https://discord.bots.gg/bots/757258298725630008)
 - [Discord Bot List / Top.gg / DBL](https://top.gg/bot/757258298725630008)
 - [Here](https://apicord.github.io/invite)
-
-## Ideas
-- [Explain xkcd](https://www.explainxkcd.com/wiki/index.php/Main_Page)
-- api!date
-Want to colaborate with ideas? [Leave an issue!](https://github.com/APIcord/discord/issues/new/choose) and tag it with the "[idea](https://github.com/APIcord/discord/issues?q=is%3Aissue+is%3Aopen+label%3Aidea)" tag
-
-## Want to see the code/download older versions
-- Alpha1 - 2.4 are branches
-- Alpha3 - 3.0.1 are branches with the prefix "archive-"
-- Alpha3.1+ are in [this zip files](https://github.com/APIcord/discord-archive)

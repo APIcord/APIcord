@@ -1,14 +1,16 @@
 [tool.poetry]
-name = "APIcord Discord"
-version = "0.0.0.3"
-description = "Discord bot"
+name = "APIcord"
+version = "0.0.3.1.1"
+description = "bot"
 authors = ["absucc"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
+colorama = "^0.4.4"
+blessings = "^1.7"
 discord = "^1.0.1"
 flask = "^1.1.2"
-#cairosvg = "^2.5.0"
+urllib3 = "^1.26.2"
 
 [tool.poetry.dev-dependencies]
 

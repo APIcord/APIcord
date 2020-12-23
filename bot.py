@@ -20,7 +20,6 @@ color = os.getenv("COLOR")
 init()
 tb = Terminal()
 bot = commands.Bot(command_prefix=prefix, description="Discord bot focused on APIs", allowed_mentions=discord.AllowedMentions(roles=False, users=False, everyone=False))
-app = Flask("")
 embed = discord.Embed
 http = urllib3.PoolManager()
 def ascii():
@@ -41,6 +40,8 @@ def logsenv():
     os.system("cls" if os.name=="nt" else "clear")
     ascii()
   print(Style.RESET_ALL)
+app = Flask("")
+logsenv()
 
 ascii()
 print(f"{Back.WHITE}{Fore.BLACK}---- LOGS ----")
@@ -182,21 +183,21 @@ async def img(ctx, *, something):
     jdat = (http.request('GET', 'https://some-random-api.ml/img/birb'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     embed=discord.Embed(title=("*bird sounds.mp3*"), description=(""), color=(botcolor))
-    embed.set_image(url=(jsdata['link']))
+    embed.set_image(url=jsdata['link'])
     embed.set_footer(text="Powered by Some Random Api")
     await ctx.send(embed=embed)
   elif something == "fox":
     jdat = (http.request('GET', 'https://some-random-api.ml/img/fox'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
-    embed=discord.Embed(title=("fox mouse"), description=("(I think)"), color=(botcolor))
+    embed=discord.Embed(title="fox mouse", description="(I think)", color=botcolor)
     embed.set_image(url=(jsdata['link']))
     embed.set_footer(text="Powered by Some Random Api")
     await ctx.send(embed=embed)
   elif something == "koala":
     jdat = (http.request('GET', 'https://some-random-api.ml/img/koala'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
-    embed=discord.Embed(title=("a"), description=(""), color=(botcolor))
-    embed.set_image(url=(jsdata['link']))
+    embed=discord.Embed(title="a", description="", color=botcolor)
+    embed.set_image(url=jsdata['link'])
     embed.set_footer(text="Powered by Some Random Api")
     await ctx.send(embed=embed)
   else:
@@ -397,7 +398,7 @@ async def about(ctx):
 
 @bot.command(aliases=["apicord", "cord"])
 async def credits(ctx):
-  embed=discord.Embed(title="APIcord Alpha 3.1.1", description="Credits", color=botcolor)
+  embed=discord.Embed(title=f"APIcord Alpha {__version__}", description="Credits", color=botcolor)
   embed.add_field(name="-- CREW --", value=":)", inline=False)
   embed.add_field(name="Creator and programmer", value="error#7900 (absucc)", inline=True)
   embed.add_field(name="-- APIS --", value="used in this project", inline=False)
@@ -412,6 +413,8 @@ async def credits(ctx):
   embed.add_field(name="Some Random Api", value="by **Seif Mansour**, **Taka Inzori**, **Excigma** & **Telk** \n (" + prefix + "img cat, " + prefix + "img panda, " + prefix + "img red panda, " + prefix + "img bird, " + prefix + "img fox, " + prefix + "img koala, " + prefix + "hug, " + prefix + "fact cat, " + prefix + "fact dog, " + prefix + "fact panda, " + prefix + "fact fox, " + prefix + "fact bird & " + prefix + "fact koala)", inline=False)
   embed.add_field(name="-- LIBRARIES --", value="used", inline=False)
   embed.add_field(name="urllib3", value="by **urllib3 community**", inline=True)
+  embed.add_field(name="Blessings", value="by **Erik Rose**", inline=True)
+  embed.add_field(name="Colorama", value="by **Jonathan Hartley & contributors**", inline=True)
   embed.add_field(name="Discord", value="yes, I made a section for 1 library", inline=False)
   embed.add_field(name="discord.py", value="by **Rapptz and the discord.py community**", inline=True)
   embed.add_field(name="Telegram", value="Coming soon", inline=False)
@@ -425,12 +428,14 @@ async def credits(ctx):
   embed.add_field(name="Thanks", value="Thanks to **Polking** to follow the development, **DEL** guys for some help and **the people** for comment and suggest", inline=False)
   await ctx.send(embed=embed)
 
-@bot.command()
+@bot.command(aliases=["licenses"])
 async def license(ctx):
   embed=discord.Embed(title="Licenses", description="", color=botcolor)
   embed.add_field(name="APIcord", value="MIT License (© 2020 absucc)", inline=(True))
+  embed.add_field(name="Blessings", value="MIT License (© 2011 Erik Rose)", inline=True)
   embed.add_field(name="Bootstrap", value="MIT License (© 2011-2020 Twitter, Inc. & The Bootstrap Authors)", inline=True)
   embed.add_field(name="Coffee API", value="MIT License (© 2020 AlexFlipnote)", inline=True)
+  embed.add_field(name="Colorama", value="BSD-3-Clause License", inline=True)
   embed.add_field(name="Discord.py", value="MIT License (© 2015-2020 Rapptz)", inline=True)
   embed.add_field(name="Dog CEO Image Library", value="GNU General Public License v3.0", inline=True)
   embed.add_field(name="Flask", value="BSD-3-Clause License", inline=True)
@@ -492,7 +497,7 @@ async def xkcd(ctx, numberz):
   else:
     jdat = (http.request("GET", "https://xkcd.com/" + numberz + "/info.0.json"))
     jsdata = (json.loads(jdat.data.decode("utf-8")))
-    embed=discord.Embed(title=(jsdata["title"]), description="N° " + str(jsdata["num"]) + " | " + jsdata["month"] + "/" + jsdata["day"] + "/" + jsdata["year"], color=botcolor)
+    embed=discord.Embed(title=jsdata["title"], description="N° " + str(jsdata["num"]) + " | " + jsdata["month"] + "/" + jsdata["day"] + "/" + jsdata["year"], color=botcolor)
     embed.set_image(url=jsdata["img"])
     embed.set_footer(text="Powered by xkcd's JSON interface")
     await ctx.send(embed=embed)
@@ -550,12 +555,13 @@ if enwebserver == True:
 
   def run():
     app.run(host=host_flask, port=port_flask)
+    return logsenv()
 
   # Code from https://repl.it/@TheDrone7/discordpy-rewrite#keep_alive.py
   def keep_alive():
     server = Thread(target=run)
     server.start()
-    logsenv()
+    return logsenv()
 
   keep_alive()
 bot.run(os.getenv("TOKEN"))
