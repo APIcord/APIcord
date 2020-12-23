@@ -12,8 +12,8 @@
 2. Create a bot for that application, copy the token
 3. Install the requeriments (Not obligatory for Repl.it users)
     - ` pip install -r requirements.txt `
-4. Complete [.env.example](.env.example)
-5. Change the name of .env.example to .env
+4. Complete [.env.example](.env.example), then copy the content
+5. Create a ".env" file and paste the data
 6. Run it
 
 ## Official bot
