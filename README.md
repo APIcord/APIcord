@@ -9,6 +9,7 @@
 
 ## Installation
 1. Create an application on the [Discord Developer Portal](https://discord.com/developers)
+2. Clone this repo (`git clone https://github.com/APIcord/discord.git`) or [download the master branch](https://github.com/APIcord/discord/archive/master.zip)
 2. Create a bot for that application, copy the token
 3. Complete [.env.example](.env.example), then copy the content
 4. Create a ".env" file and paste the data
