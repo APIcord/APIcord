@@ -24,3 +24,8 @@ This bot is running in Discord 24/7 in a official "instance", this is disponible
 - [Discord Bots (bots.gg)](https://discord.bots.gg/bots/757258298725630008)
 - [Discord Bot List / Top.gg / DBL](https://top.gg/bot/757258298725630008)
 - [Here](https://apicord.github.io/invite)
+
+## Want to see older versions
+- Alpha3.1+ are in [this zip files](https://github.com/APIcord/discord-archive)
+- Alpha1 - 2.4 are branches
+- Alpha3 - 3.0.1 are branches with the prefix "archive-"
