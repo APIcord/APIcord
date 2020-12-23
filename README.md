@@ -12,7 +12,11 @@
 - date
 
 ## Instalation
-Put you token in the variable "TOKEN" in .env and run it. (I recommend configuring it fully)
+1. Create an application on the [Discord Developer Portal](https://discord.com/developers)
+2. Create a bot for that application, copy the token
+3. Complete [.env.example](.env.example)
+4. Change the name of .env.example to .env
+5. Run it
 
 ## Official bot
 This bot is running in Discord 24/7 in a official "instance", this is disponible from:
