@@ -437,19 +437,27 @@ async def purge(ctx, the_limit):
 
 @bot.command()
 async def xkcd(ctx, numberz):
-  def last_xkcd_comic_ever():
+  if numberz == "latest":
     jdat = (http.request('GET', 'https://xkcd.com/info.0.json'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     embed=discord.Embed(title=(jsdata["title"]), description="N° " + str(jsdata["num"]) + " | " + jsdata["month"] + "/" + jsdata["day"] + "/" + jsdata["year"], color=botcolor)
     embed.set_image(url=jsdata["img"])
     embed.set_footer(text="Powered by xkcd's JSON interface")
     await ctx.send(embed=embed)
-  if numberz == "latest":
-    last_xkcd_comic_ever()
   elif numberz == "last":
-    last_xkcd_comic_ever()
+    jdat = (http.request('GET', 'https://xkcd.com/info.0.json'))
+    jsdata = (json.loads(jdat.data.decode('utf-8')))
+    embed=discord.Embed(title=(jsdata["title"]), description="N° " + str(jsdata["num"]) + " | " + jsdata["month"] + "/" + jsdata["day"] + "/" + jsdata["year"], color=botcolor)
+    embed.set_image(url=jsdata["img"])
+    embed.set_footer(text="Powered by xkcd's JSON interface")
+    await ctx.send(embed=embed)
   elif numberz == "current":
-    last_xkcd_comic_ever()
+    jdat = (http.request('GET', 'https://xkcd.com/info.0.json'))
+    jsdata = (json.loads(jdat.data.decode('utf-8')))
+    embed=discord.Embed(title=(jsdata["title"]), description="N° " + str(jsdata["num"]) + " | " + jsdata["month"] + "/" + jsdata["day"] + "/" + jsdata["year"], color=botcolor)
+    embed.set_image(url=jsdata["img"])
+    embed.set_footer(text="Powered by xkcd's JSON interface")
+    await ctx.send(embed=embed)
   else:
     jdat = (http.request('GET', 'https://xkcd.com/' + numberz + '/info.0.json'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
