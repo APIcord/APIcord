@@ -1,10 +1,11 @@
-@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css');
+@import url('bootstrap/bootstrap.min.css');
 @import url('redefault.min.css');
 @import url('https://cdn.jsdelivr.net/npm/fork-awesome@1.1.7/css/fork-awesome.min.css');
 body {
-    padding: 2%;
-    background: rgb(49, 49, 49);
-    color: white;
+  text-align: center;
+  padding: 2%;
+  background: rgb(49, 49, 49);
+  color: white;
 }
 
 
