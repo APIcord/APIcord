@@ -1,4 +1,5 @@
 # [API](https://en.wikipedia.org/wiki/API)[cord](https://en.wikipedia.org/wiki/Discord_(software)) Discord [![Run on Repl.it](https://repl.it/badge/github/APIcord/discord)](https://repl.it/github/APIcord/discord)
+
 ## Features
 - [Coffee Images](https://coffee.alexflipnote.dev)
 - [Dog Images](https://dog.ceo/dog-api)
@@ -23,10 +24,10 @@ This bot is running in Discord 24/7 in a official "instance", this is disponible
 
 ## Ideas
 - [Explain xkcd](https://www.explainxkcd.com/wiki/index.php/Main_Page)
-- date
+- api!date
 Want to colaborate with ideas? [Leave an issue!](https://github.com/APIcord/discord/issues/new/choose) and tag it with the "[idea](https://github.com/APIcord/discord/issues?q=is%3Aissue+is%3Aopen+label%3Aidea)" tag
 
-## Want to see older versions
+## Want to see the code/download older versions
 - Alpha1 - 2.4 are branches
 - Alpha3 - 3.0.1 are branches with the prefix "archive-"
 - Alpha3.1+ are in [this zip files](https://github.com/APIcord/discord-archive)
