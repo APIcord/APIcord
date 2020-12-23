@@ -10,6 +10,7 @@
 ## Ideas
 - [Explain xkcd](https://www.explainxkcd.com/wiki/index.php/Main_Page)
 - date
+Want to colaborate with ideas? [Leave an issue!](https://github.com/APIcord/discord/issues/new/choose) and tag it with the "<span style="background: #FBCA04; border-radious: 10px;">idea</span>" tag
 
 ## Instalation
 1. Create an application on the [Discord Developer Portal](https://discord.com/developers)
@@ -26,6 +27,6 @@ This bot is running in Discord 24/7 in a official "instance", this is disponible
 - [Here](https://apicord.github.io/invite)
 
 ## Want to see older versions
-- Alpha3.1+ are in [this zip files](https://github.com/APIcord/discord-archive)
 - Alpha1 - 2.4 are branches
+- Alpha3.1+ are in [this zip files](https://github.com/APIcord/discord-archive)
 - Alpha3 - 3.0.1 are branches with the prefix "archive-"
