@@ -8,7 +8,7 @@
 - [Meme generator](https://memegen.link)
 - [and more!!!](https://some-random-api.ml)
 
-## Instalation
+## Installation
 1. Create an application on the [Discord Developer Portal](https://discord.com/developers)
 2. Create a bot for that application, copy the token
 3. Complete [.env.example](.env.example)
