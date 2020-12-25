@@ -1,5 +1,4 @@
 colorama
-blessings
 discord.py
 flask
 urllib3
