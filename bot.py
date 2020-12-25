@@ -14,7 +14,7 @@ from datetime import date
 #from googletrans import Translator
 # import cairosvg
 
-__version__ = "Alpha 3.1.2"
+__version__ = "Alpha 3.1.3"
 prefix = os.getenv("PREFIX")
 color = os.getenv("COLOR")
 
@@ -176,7 +176,7 @@ async def info(ctx, category):
     embed=discord.Embed(title="About the bot", description="No prefix", color=botcolor)
     embed.add_field(name=prefix + "about", value="About this instance", inline=True)
     embed.add_field(name=prefix + "credits", value="Credits", inline=True)
-    embed.add_field(name=prefix + "license", value="License", inline=True)
+    embed.add_field(name=prefix + "licenses", value="Licenses", inline=True)
     embed.add_field(name=prefix + "invite", value="Displays bot invite", inline=True)
     embed.add_field(name=prefix + "issues", value="Go to the issues page of this bot", inline=True)
     embed.add_field(name=prefix + "privacy", value="Bot Privacy Policy", inline=True)
@@ -298,12 +298,12 @@ async def gmeme(ctx, image, top_text, bottom_text):
 @bot.command()
 async def fact(ctx, factstuff):
   if factstuff == "cat":
-    jdat = (http.request('GET', 'https://catfact.ninja/fact'))
-    #jdat = (http.request("GET", "https://some-random-api.ml/facts/cat"))
+    #jdat = (http.request('GET', 'https://catfact.ninja/fact'))
+    jdat = (http.request("GET", "https://some-random-api.ml/facts/cat"))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     embed=discord.Embed(title=("Did you know..."), description=(jsdata['fact']), color=(botcolor))
-    embed.set_footer(text="Powered by catfact.ninja")
-    #embed.set_footer(text="Powered by Some Random Api")
+    #embed.set_footer(text="Powered by catfact.ninja")
+    embed.set_footer(text="Powered by Some Random Api")
     await ctx.send(embed=embed)
   elif factstuff == "dog":
     jdat = (http.request('GET', 'https://some-random-api.ml/facts/dog'))
@@ -457,7 +457,7 @@ async def credits(ctx):
   embed.add_field(name="-- APIS --", value="used in this project", inline=False)
   embed.add_field(name="Coffee API", value="by **Alex Flipnote** \n (" + prefix + "img coffee)", inline=True)
   embed.add_field(name="Dog API", value="by **Elliott Landsborough**, **Eduard Moya** & **Kathie Wu** \n (" + prefix + "img dog)", inline=True)
-  embed.add_field(name="Cat Facts API (catfact.ninja)", value="by **Cat Fact API creators** \n (" + prefix + "fact cat)", inline=True)
+  #embed.add_field(name="Cat Facts API (catfact.ninja)", value="by **Cat Fact API creators** \n (" + prefix + "fact cat)", inline=True)
   embed.add_field(name="Meme API", value="by **Dev Daksan** \n (" + prefix + "reddit)", inline=True)
   embed.add_field(name="memegen.link", value="by **Jace Browning** \n (" + prefix + "gmeme/gm)", inline=True)
   #embed.add_field(name=("Fun Translations API"), value=("by **Fun Translations** \n (" + prefix + "funtranslations/fun_translations/ft)"), inline=(True))
@@ -466,7 +466,6 @@ async def credits(ctx):
   embed.add_field(name="Some Random Api", value="by **Seif Mansour**, **Taka Inzori**, **Excigma** & **Telk** \n (" + prefix + "img cat, " + prefix + "img panda, " + prefix + "img red panda, " + prefix + "img bird, " + prefix + "img fox, " + prefix + "img koala, " + prefix + "hug, " + prefix + "fact cat, " + prefix + "fact dog, " + prefix + "fact panda, " + prefix + "fact fox, " + prefix + "fact bird & " + prefix + "fact koala)", inline=False)
   embed.add_field(name="-- LIBRARIES --", value="used", inline=False)
   embed.add_field(name="urllib3", value="by **urllib3 community**", inline=True)
-  embed.add_field(name="Blessings", value="by **Erik Rose**", inline=True)
   embed.add_field(name="Colorama", value="by **Jonathan Hartley & contributors**", inline=True)
   embed.add_field(name="Discord", value="yes, I made a section for 1 library", inline=False)
   embed.add_field(name="discord.py", value="by **Rapptz and the discord.py community**", inline=True)
@@ -484,8 +483,7 @@ async def credits(ctx):
 @bot.command(aliases=["licenses"])
 async def license(ctx):
   embed=discord.Embed(title="Licenses", description="", color=botcolor)
-  embed.add_field(name="APIcord", value="MIT License (© 2020 absucc)", inline=(True))
-  embed.add_field(name="Blessings", value="MIT License (© 2011 Erik Rose)", inline=True)
+  embed.add_field(name="APIcord", value="MIT License (© 2020 absucc)", inline=True)
   embed.add_field(name="Bootstrap", value="MIT License (© 2011-2020 Twitter, Inc. & The Bootstrap Authors)", inline=True)
   embed.add_field(name="Coffee API", value="MIT License (© 2020 AlexFlipnote)", inline=True)
   embed.add_field(name="Colorama", value="BSD-3-Clause License", inline=True)
