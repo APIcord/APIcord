@@ -1,6 +1,6 @@
 import os
+os.system("cls" if os.name=="nt" else "clear")
 from colorama import init, Fore, Back, Style
-from blessings import Terminal
 #import time
 import random
 import discord
@@ -10,31 +10,84 @@ from threading import Thread
 import json
 import os.path
 import urllib3
+from datetime import date
+#from googletrans import Translator
 # import cairosvg
 
-__version__ = "Alpha 3.1.1"
+__version__ = "Alpha 3.1.2"
 prefix = os.getenv("PREFIX")
 color = os.getenv("COLOR")
 
 # Start stuff
 init()
-tb = Terminal()
 bot = commands.Bot(command_prefix=prefix, description="Discord bot focused on APIs", allowed_mentions=discord.AllowedMentions(roles=False, users=False, everyone=False))
 embed = discord.Embed
 http = urllib3.PoolManager()
-def ascii():
+tdate = date.today()
+#gtrans = Translator()
+
+# ASCII
+def classic_ascii():
   print(f"""{Fore.RED}yyyyyyyyyyyyyyyyyyyy
 yyyyyyyyyyyyyyyyyyyy
 yyyy{Fore.WHITE}:          :{Fore.RED}yyyy
 yyyy{Fore.WHITE}. /s`:o+:::.{Fore.RED}hhyy
-yyyy{Fore.WHITE}. s+-:o/o//.{Fore.RED}hhhh {Fore.WHITE}""" + tb.bold("APIcord") + f""" ({Style.RESET_ALL}by absucc){Fore.RED}
+yyyy{Fore.WHITE}. s+-:o/o//.{Fore.RED}hhhh {Fore.WHITE}APIcord {Fore.RESET}(by absucc){Fore.RED}
 yyyy{Fore.WHITE}.-s++:o. //.{Fore.RED}hhhh {Fore.GREEN}ASCII art powered by{Fore.RED}
 yyyy{Fore.WHITE}.-.`/-:  .-.{Fore.RED}hhhh {Fore.GREEN}TEXT-IMAGE.com & Colorama{Fore.RED}
 yyyy{Fore.WHITE}.`/:.....::+{Fore.RED}hhhh
 yyyy{Fore.WHITE}oy{Fore.RED}hhhhhhhyyhhhhh
 yyyyyyhhhhhhhhhhhhhh {Style.RESET_ALL}v{__version__}
 {Style.RESET_ALL}""")
-#prefix=os.getenv("PREFIX"), avatar=os.getenv("AVATAR_URL"), instance_name=os.getenv("NAME"), instance_owner=os.getenv("OWNER"), guilds=f"{len(bot.guilds)}"
+def matrix_ascii():
+  print(f"""{Fore.GREEN}yyyyyyyyyyyyyyyyyyyy
+yyyyyyyyyyyyyyyyyyyy
+yyyy{Fore.WHITE}:          :{Fore.GREEN}yyyy
+yyyy{Fore.WHITE}. /s`:o+:::.{Fore.GREEN}hhyy
+yyyy{Fore.WHITE}. s+-:o/o//.{Fore.GREEN}hhhh {Fore.WHITE}APIcord {Fore.RESET}(by absucc){Fore.GREEN}
+yyyy{Fore.WHITE}.-s++:o. //.{Fore.GREEN}hhhh {Fore.GREEN}ASCII art powered by{Fore.GREEN}
+yyyy{Fore.WHITE}.-.`/-:  .-.{Fore.GREEN}hhhh {Fore.GREEN}TEXT-IMAGE.com & Colorama{Fore.GREEN}
+yyyy{Fore.WHITE}.`/:.....::+{Fore.GREEN}hhhh
+yyyy{Fore.WHITE}oy{Fore.GREEN}hhhhhhhyyhhhhh
+yyyyyyhhhhhhhhhhhhhh {Style.RESET_ALL}v{__version__}
+{Style.RESET_ALL}""")
+def extra_ascii():
+  print(f"""{Back.RED}{Fore.RED}yyyyyyyyyyyyyyyyyyyy
+yyyyyyyyyyyyyyyyyyyy
+yyyy{Back.RESET}{Fore.WHITE}:          :{Back.RED}{Fore.RED}yyyy
+yyyy{Back.RESET}{Fore.WHITE}. /s`:o+:::.{Back.RED}{Fore.RED}hhyy
+yyyy{Back.RESET}{Fore.WHITE}. s+-:o/o//.{Back.RED}{Fore.RED}hhhh{Back.RESET} {Fore.WHITE}APIcord {Fore.RESET}(by absucc){Back.RED}{Fore.RED}
+yyyy{Back.RESET}{Fore.WHITE}.-s++:o. //.{Back.RED}{Fore.RED}hhhh{Back.RESET} {Fore.GREEN}ASCII art powered by{Back.RED}{Fore.RED}
+yyyy{Back.RESET}{Fore.WHITE}.-.`/-:  .-.{Back.RED}{Fore.RED}hhhh{Back.RESET} {Fore.GREEN}TEXT-IMAGE.com & Colorama{Back.RED}{Fore.RED}
+yyyy{Back.RESET}{Fore.WHITE}.`/:.....::+{Back.RED}{Fore.RED}hhhh
+yyyy{Back.RESET}{Fore.WHITE}oy{Back.RED}{Fore.RED}hhhhhhhyyhhhhh
+yyyyyyhhhhhhhhhhhhhh{Style.RESET_ALL} v{__version__}
+{Style.RESET_ALL}""")
+def experimental_ascii():
+  print(f"""{Fore.RED}{Back.RED}yyyyyyyyyyyyyyyyyyyy
+yyyyyyyyyyyyyyyyyyyy
+yyyy{Back.WHITE}{Fore.WHITE}:          :{Fore.RED}{Back.RED}yyyy
+yyyy{Back.WHITE}{Fore.WHITE}.{Fore.RED} /s`:o+:::.{Fore.RED}{Back.RED}hhyy
+yyyy{Back.WHITE}{Fore.WHITE}.{Fore.RED} s{Fore.WHITE}+{Fore.RED}-:o/o//.{Fore.RED}{Back.RED}hhhh{Back.RESET} {Fore.WHITE}APIcord (by absucc){Back.RESET}{Fore.RED}{Back.RED}
+yyyy{Back.WHITE}{Fore.WHITE}.{Fore.RED}-s++:o. //.{Fore.RED}{Back.RED}hhhh{Back.RESET} {Fore.GREEN}ASCII art powered by{Fore.RED}{Back.RED}
+{Back.RED}yyyy{Back.WHITE}.-.{Fore.WHITE}`/{Fore.RED}-:  .-.{Fore.RED}{Back.RED}hhhh{Back.RESET} {Fore.GREEN}TEXT-IMAGE.com & Colorama{Fore.RED}{Back.RED}
+yyyy{Back.WHITE}{Fore.WHITE}.`{Fore.RED}/:{Fore.WHITE}.....::+{Fore.RED}{Back.RED}hhhh
+yyyy{Back.WHITE}{Fore.WHITE}oy{Fore.RED}{Back.RED}hhhhhhhyyhhhhh
+yyyyyyhhhhhhhhhhhhhh{Style.RESET_ALL} v{__version__}
+{Style.RESET_ALL}""")
+def ascii():
+  if os.getenv("ASCII_ART") == "classic":
+    classic_ascii()
+  elif os.getenv("ASCII_ART") == "matrix":
+    matrix_ascii()
+  elif os.getenv("ASCII_ART") == "extra":
+    extra_ascii()
+  elif os.getenv("ASCII_ART") == "experimental":
+    experimental_ascii()
+  else:
+    print("[BANNER NOT FOUND]")
+
+# logsenv() and Flask("")
 def logsenv():
   if os.getenv("LOGS") == "0":
     os.system("cls" if os.name=="nt" else "clear")
@@ -137,10 +190,10 @@ async def info(ctx, category):
     embed.add_field(name=prefix + "hug", value="A hug, for you, my friend", inline=True)
     embed.add_field(name=prefix + "say <words>", value="The bot something for you", inline=True)
     embed.add_field(name=prefix + "purge <amount>", value="Delete message", inline=True)
-    embed.add_field(name=prefix + "xkcd <latest/last/current/number>", value="Read a comic of xkcd! IN APICORD!!!", inline=True)
+    embed.add_field(name=prefix + "xkcd <0 (Current) /number>", value="Read a comic of xkcd! IN APICORD!!!", inline=True)
     await ctx.send(embed=embed)
   else:
-    await ctx.send("error, please put a valid command")
+    await ctx.send("Error, please put a valid command")
 
 @bot.command()
 async def img(ctx, *, something):
@@ -398,7 +451,7 @@ async def about(ctx):
 
 @bot.command(aliases=["apicord", "cord"])
 async def credits(ctx):
-  embed=discord.Embed(title=f"APIcord Alpha {__version__}", description="Credits", color=botcolor)
+  embed=discord.Embed(title=f"APIcord {__version__}", description="Credits", color=botcolor)
   embed.add_field(name="-- CREW --", value=":)", inline=False)
   embed.add_field(name="Creator and programmer", value="error#7900 (absucc)", inline=True)
   embed.add_field(name="-- APIS --", value="used in this project", inline=False)
@@ -466,45 +519,45 @@ async def say(ctx, *, yourmessage):
     await ctx.send(yourmessage)
 
 @bot.command(aliases=["delete"])
-async def purge(ctx, the_limit):
-  embed=discord.Embed(title=":wastebucket::thumbsup:", description="Made", color=botcolor)
+async def purge(ctx, the_limit: int):
+  embed=discord.Embed(title=":wastebasket::thumbsup:", description=str(the_limit) + " messages were eliminated successfully", color=botcolor)
   await ctx.channel.purge(limit=the_limit)
   await ctx.send(embed=embed)
 
 @bot.command()
-async def xkcd(ctx, numberz):
-  if numberz == "latest":
+async def xkcd(ctx, numberz: int):
+  if numberz == 0:
     jdat = (http.request('GET', 'https://xkcd.com/info.0.json'))
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     embed=discord.Embed(title=(jsdata["title"]), description="N° " + str(jsdata["num"]) + " | " + jsdata["month"] + "/" + jsdata["day"] + "/" + jsdata["year"], color=botcolor)
     embed.set_image(url=jsdata["img"])
     embed.set_footer(text="Powered by xkcd's JSON interface")
     await ctx.send(embed=embed)
-  elif numberz == "last":
-    jdat = (http.request('GET', 'https://xkcd.com/info.0.json'))
-    jsdata = (json.loads(jdat.data.decode('utf-8')))
-    embed=discord.Embed(title=jsdata["title"], description="N° " + str(jsdata["num"]) + " | " + jsdata["month"] + "/" + jsdata["day"] + "/" + jsdata["year"], color=botcolor)
-    embed.set_image(url=jsdata["img"])
-    embed.set_footer(text="Powered by xkcd's JSON interface")
-    await ctx.send(embed=embed)
-  elif numberz == "current":
-    jdat = (http.request("GET", "https://xkcd.com/info.0.json"))
-    jsdata = (json.loads(jdat.data.decode("utf-8")))
-    embed=discord.Embed(title=jsdata["title"], description="N° " + str(jsdata["num"]) + " | " + jsdata["month"] + "/" + jsdata["day"] + "/" + jsdata["year"], color=botcolor)
-    embed.set_image(url=jsdata["img"])
-    embed.set_footer(text="Powered by xkcd's JSON interface")
-    await ctx.send(embed=embed)
   else:
-    jdat = (http.request("GET", "https://xkcd.com/" + numberz + "/info.0.json"))
+    jdat = (http.request("GET", "https://xkcd.com/" + str(numberz) + "/info.0.json"))
     jsdata = (json.loads(jdat.data.decode("utf-8")))
     embed=discord.Embed(title=jsdata["title"], description="N° " + str(jsdata["num"]) + " | " + jsdata["month"] + "/" + jsdata["day"] + "/" + jsdata["year"], color=botcolor)
     embed.set_image(url=jsdata["img"])
     embed.set_footer(text="Powered by xkcd's JSON interface")
     await ctx.send(embed=embed)
 
+#@bot.command(aliases=['t'])
+#async def translate(ctx, lang, *, query):
+  #if lang == "en":
+    #translation = gtrans.translate([query], dest='en')
+    #for translated in translation:
+      #embed=discord.Embed(title="{}".format(translated.text), description="", color=botcolor)
+      #embed.set_footer(text="Powered by Google Translate")
+      #await ctx.send(embed=embed)
+
 @bot.command(aliases=["hgang", "Hgang", "HGang", "H", "h", "jointhehgang"])
 async def joinhgang(ctx):
-  embed=discord.Embed(title="Join the H gang", description="██╗░░██╗\n██║░░██║\n███████║\n██╔══██║\n██║░░██║\n╚═╝░░╚═╝", color=botcolor)
+  embed=discord.Embed(title="Join the H gang", description="""██╗░░██╗
+  ██║░░██║
+  ███████║
+  ██╔══██║
+  ██║░░██║
+  ╚═╝░░╚═╝""", color=botcolor)
   embed.set_thumbnail(url="https://media.nertivia.net/6661602938407882752/6680595321476616192/avatar.gif")
   embed.add_field(name="Reddit", value="r/TheLetterH", inline=True)
   embed.add_field(name="Nertivia", value="https://nertivia.net/invites/H", inline=True)
@@ -518,6 +571,17 @@ async def SmolF(ctx):
 @bot.command()
 async def thereisanimposteramongus(ctx):
   await ctx.send("**ඞ There is 1 imposter among us ඞ**")
+@bot.command(aliases=["christmaseve", "christmasevening", "xmas"])
+async def christmas(ctx):
+  day = tdate.strftime("%d")
+  month = tdate.strftime("%m")
+  if month == "12":
+    if day == "24":
+      await ctx.send("Tommorow is christamas")
+    elif day == "25":
+      await ctx.send("**MERRY CHRISTMAS!!!**")
+    else:
+      await ctx.send("It's not christmas\nThis is easter egg is for Christmas Eve & Christmas\nWait for it")
 
     
 # WEBSERVER
