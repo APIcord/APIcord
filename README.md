@@ -34,6 +34,4 @@ This bot is running in Discord 24/7 in a official "instance", this is disponible
 Want to colaborate with ideas? [Leave an issue!](https://github.com/APIcord/discord/issues/new/choose) and tag it with the "[idea](https://github.com/APIcord/discord/issues?q=is%3Aissue+is%3Aopen+label%3Aidea)" tag
 
 ## Want to see the code/download older versions
-- Alpha1 - 2.4 are branches
-- Alpha3 - 3.0.1 are branches with the prefix "archive-"
-- Alpha3.1+ are in [this zip files](https://github.com/APIcord/discord-archive)
+- Alpha1+ are in [this zip files](https://github.com/APIcord/discord-archive/tree/Alpha)
