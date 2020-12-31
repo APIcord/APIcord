@@ -11,10 +11,10 @@ import json
 import os.path
 import urllib3
 from datetime import date
-#from googletrans import Translator
+from google_trans_new import google_translator
 # import cairosvg
 
-__version__ = "Alpha 3.1.3"
+__version__ = "Alpha 3.2"
 prefix = os.getenv("PREFIX")
 color = os.getenv("COLOR")
 
@@ -24,7 +24,7 @@ bot = commands.Bot(command_prefix=prefix, description="Discord bot focused on AP
 embed = discord.Embed
 http = urllib3.PoolManager()
 tdate = date.today()
-#gtrans = Translator()
+gtrans = google_translator()
 
 # ASCII
 def classic_ascii():
@@ -126,7 +126,17 @@ else:
 # Status
 @bot.event
 async def on_ready():
-  await bot.change_presence(status=discord.Status.dnd, activity=discord.Activity(type=discord.ActivityType.watching, name="APIs | " + prefix + "help"))
+  if os.getenv("STATUS_TYPE") == "online":
+    await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="APIs | " + prefix + "help"))
+  elif os.getenv("STATUS_TYPE") == "idle":
+    await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=discord.ActivityType.watching, name="APIs | " + prefix + "help"))
+  elif os.getenv("STATUS_TYPE") == "dnd":
+    await bot.change_presence(status=discord.Status.dnd, activity=discord.Activity(type=discord.ActivityType.watching, name="APIs | " + prefix + "help"))
+  elif os.getenv("STATUS_TYPE") == "do_not_disturb":
+    await bot.change_presence(status=discord.Status.dnd, activity=discord.Activity(type=discord.ActivityType.watching, name="APIs | " + prefix + "help"))
+  else:
+    await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="APIs | " + prefix + "help"))
+  
 # Good part
 
 @bot.command()
@@ -136,10 +146,11 @@ async def nice(ctx):
 bot.remove_command("help")
 @bot.command(aliases=["commands"])
 async def help(ctx):
-  embed=discord.Embed(title="APIcord", description="Help", color=botcolor)
+  embed=discord.Embed(title="APIcord Help Menu", description="Featured Commands: **" + prefix + "motd**, **" + prefix + "about** & **" + prefix + "credits**", color=botcolor)
   embed.add_field(name="Meme commands", value=prefix + "info meme", inline=True)
   embed.add_field(name="Image commands", value=prefix + "info img", inline=True)
   embed.add_field(name="Fact commands", value=prefix + "info fact", inline=True)
+  embed.add_field(name="Translation commands", value=prefix + "info translate", inline=True)
   embed.add_field(name="About commands", value=prefix + "info about", inline=True)
   embed.add_field(name="More commands", value=prefix + "info more", inline=True)
   await ctx.send(embed=embed)
@@ -172,8 +183,13 @@ async def info(ctx, category):
     embed.add_field(name=prefix + "fact bird", value="Random bird fact", inline=True)
     embed.add_field(name=prefix + "fact koala", value="Random koala fact", inline=True)
     await ctx.send(embed=embed)
+  elif category == "translate":
+    embed=discord.Embed(title="Translator", description="Translator => Traductor", color=botcolor)
+    embed.add_field(name="How to use?", value="Type " + prefix + "translate/t <language code> <text>", inline=True)
+    embed.add_field(name="Languages codes", value="I think the Languages section on the README.md of LittleCoder's \"translate\" python module could help you: https://github.com/littlecodersh/translation/blob/master/README_EN.md#language", inline=True)
+    await ctx.send(embed=embed)
   elif category == "about":
-    embed=discord.Embed(title="About the bot", description="No prefix", color=botcolor)
+    embed=discord.Embed(title="About the bot", description="", color=botcolor)
     embed.add_field(name=prefix + "about", value="About this instance", inline=True)
     embed.add_field(name=prefix + "credits", value="Credits", inline=True)
     embed.add_field(name=prefix + "licenses", value="Licenses", inline=True)
@@ -188,12 +204,19 @@ async def info(ctx, category):
     embed.add_field(name=prefix + "chucknorris", value="Random Chuck Norris Joke", inline=True)
     embed.add_field(name=prefix + "delete <amount>", value="Delete message", inline=True)
     embed.add_field(name=prefix + "hug", value="A hug, for you, my friend", inline=True)
+    embed.add_field(name=prefix + "motd", value="Read the message of the day!", inline=True)
     embed.add_field(name=prefix + "say <words>", value="The bot something for you", inline=True)
     embed.add_field(name=prefix + "purge <amount>", value="Delete message", inline=True)
     embed.add_field(name=prefix + "xkcd <0 (Current) /number>", value="Read a comic of xkcd! IN APICORD!!!", inline=True)
     await ctx.send(embed=embed)
   else:
     await ctx.send("Error, please put a valid command")
+
+@bot.command()
+async def motd(ctx):
+  motdread = open("motd.txt","r") 
+  await ctx.send("Message of the day:\n```\n" + motdread.read() + "\n```")
+  motdread.close()
 
 @bot.command()
 async def img(ctx, *, something):
@@ -266,14 +289,14 @@ async def gmeme(ctx, image, top_text, bottom_text):
     img_type = ".webp"
   elif image.endswith(".png"):
     img_type = ".png"
-  elif image.endswith(".gif"):
-    img_type = ".gif"
+#  elif image.endswith(".gif"):
+#    img_type = ".gif"
   else:
     await ctx.send("error, image type not found")
   generating_meme=("https://api.memegen.link/images/custom/" + top_text + "/" + bottom_text + img_type + "?background=" + image)
   display_image=discord.Embed(title="Your meme is ready!", description="", color=botcolor)
   display_image.set_image(url=generating_meme)
-  embed.set_footer(text="Powered by memegen.link")
+  display_image.set_footer(text="Powered by memegen.link")
   await ctx.send(embed=display_image)
 
 #@bot.command()
@@ -415,7 +438,7 @@ async def meme(ctx, memetype):
     embed.add_field(name="How to use?", value="Type " + prefix + "gmeme <template url> <top text> <bottom text>", inline=True)
     embed.add_field(name="Writing your meme", value="You can't type you meme just like that, if you like have characters like the '?' or the space ' ' you need to put special characters the guide will be here: https://git.io/JUrSj", inline=True)
     embed.add_field(name="Image types supported", value="Currently are allowed '.jpg', '.jpeg', '.webp' and '.png'")
-    #embed.set_footer(text="Powered by memegen.link")
+    embed.set_footer(text="Powered by memegen.link")
     await ctx.send(embed=embed)
   else:
     await ctx.send("error, please put a valid command")
@@ -446,12 +469,13 @@ async def about(ctx):
   embed_two.add_field(name="Owner:", value=os.getenv("OWNER"), inline=True)
   embed_two.add_field(name="Prefix:", value=os.getenv("PREFIX"), inline=True)
   embed_two.add_field(name="Number of servers:", value=f"{len(bot.guilds)} servers", inline=True)
+  embed_two.add_field(name="Version of APIcord:", value=f"{__version__} servers", inline=True)
   embed_two.set_footer(text="Bot software powered by APIcord")
   await ctx.send(embed=embed_two)
 
 @bot.command(aliases=["apicord", "cord"])
 async def credits(ctx):
-  embed=discord.Embed(title=f"APIcord {__version__}", description="Credits", color=botcolor)
+  embed=discord.Embed(title=f"APIcord v{__version__}", description="Credits", color=botcolor)
   embed.add_field(name="-- CREW --", value=":)", inline=False)
   embed.add_field(name="Creator and programmer", value="error#7900 (absucc)", inline=True)
   embed.add_field(name="-- APIS --", value="used in this project", inline=False)
@@ -467,6 +491,7 @@ async def credits(ctx):
   embed.add_field(name="-- LIBRARIES --", value="used", inline=False)
   embed.add_field(name="urllib3", value="by **urllib3 community**", inline=True)
   embed.add_field(name="Colorama", value="by **Jonathan Hartley & contributors**", inline=True)
+  embed.add_field(name="google_trans_new", value="by **lushan88a**", inline=True)
   embed.add_field(name="Discord", value="yes, I made a section for 1 library", inline=False)
   embed.add_field(name="discord.py", value="by **Rapptz and the discord.py community**", inline=True)
   embed.add_field(name="Telegram", value="Coming soon", inline=False)
@@ -477,7 +502,12 @@ async def credits(ctx):
   embed.add_field(name="Fork Awesome", value="by **Fork Awesome**", inline=True)
   embed.add_field(name="Flask", value="by **Armin Ronacher**", inline=True)
   embed.add_field(name="keep_alive.py", value="by **TheDrone7**", inline=True)
-  embed.add_field(name="Thanks", value="Thanks to **Polking** to follow the development, **DEL** guys for some help and **the people** for comment and suggest", inline=False)
+  embed.add_field(name="-- SPECIAL THANKS --", value="used", inline=False)
+  embed.add_field(name="@doodlei_ (Instagram)", value="for the logotype", inline=True)
+  embed.add_field(name="Discord Extreme List guys", value="for some help", inline=True)
+  embed.add_field(name="Google, LLC", value="for the translations for " + prefix + "translate/t", inline=True)
+  embed.add_field(name="UptimeRobot", value="Website Monitoring for the original bot", inline=True)
+  embed.add_field(name="Repl.it", value="for hosting (for the original bot and the development bot) and the IDE", inline=True)
   await ctx.send(embed=embed)
 
 @bot.command(aliases=["licenses"])
@@ -487,10 +517,11 @@ async def license(ctx):
   embed.add_field(name="Bootstrap", value="MIT License (© 2011-2020 Twitter, Inc. & The Bootstrap Authors)", inline=True)
   embed.add_field(name="Coffee API", value="MIT License (© 2020 AlexFlipnote)", inline=True)
   embed.add_field(name="Colorama", value="BSD-3-Clause License", inline=True)
-  embed.add_field(name="Discord.py", value="MIT License (© 2015-2020 Rapptz)", inline=True)
+  embed.add_field(name="Discord.py", value="MIT License (© 2015-2021 Rapptz)", inline=True)
   embed.add_field(name="Dog CEO Image Library", value="GNU General Public License v3.0", inline=True)
   embed.add_field(name="Flask", value="BSD-3-Clause License", inline=True)
   embed.add_field(name="Fork Awesome", value="SIL OFL 1.1 (Font) & MIT License (CSS, LESS and Sass)", inline=True)
+  embed.add_field(name="google_trans_new", value="MIT License (© 2020 lushan88a)", inline=True)
   embed.add_field(name="memegen.link", value="MIT License (© 2020 Jace Browning)", inline=True)
   embed.add_field(name="Meme API", value="MIT License (© 2020 Dev Daksan P S)", inline=True)
   embed.add_field(name="Some Random Api (SRA)", value="Apache License 2.0")
@@ -539,14 +570,12 @@ async def xkcd(ctx, numberz: int):
     embed.set_footer(text="Powered by xkcd's JSON interface")
     await ctx.send(embed=embed)
 
-#@bot.command(aliases=['t'])
-#async def translate(ctx, lang, *, query):
-  #if lang == "en":
-    #translation = gtrans.translate([query], dest='en')
-    #for translated in translation:
-      #embed=discord.Embed(title="{}".format(translated.text), description="", color=botcolor)
-      #embed.set_footer(text="Powered by Google Translate")
-      #await ctx.send(embed=embed)
+@bot.command(aliases=['t'])
+async def translate(ctx, lang: str, *, query: str):
+  one = gtrans.translate([query], lang_tgt=lang)
+  two = one.replace("[\'", "")
+  three = two.replace("\']", "")
+  await ctx.send(three)
 
 @bot.command(aliases=["hgang", "Hgang", "HGang", "H", "h", "jointhehgang"])
 async def joinhgang(ctx):
@@ -609,7 +638,7 @@ if enwebserver == True:
   @app.route("/")
   def main():
     logsenv()
-    return render_template("index.html", **locals(), prefix=os.getenv("PREFIX"), avatar=os.getenv("AVATAR_URL"), instance_name=os.getenv("NAME"), instance_owner=os.getenv("OWNER"), guilds=f"{len(bot.guilds)}")
+    return render_template("index.html", **locals(), prefix=os.getenv("PREFIX"), avatar=os.getenv("AVATAR_URL"), instance_name=os.getenv("NAME"), instance_owner=os.getenv("OWNER"), guilds=f"{len(bot.guilds)}", version=f"{__version__}")
   @app.route("/privacy")
   def privacya():
     logsenv()
@@ -627,3 +656,4 @@ if enwebserver == True:
 
   keep_alive()
 bot.run(os.getenv("TOKEN"))
+#The APIcord Team wishes you a great 2021!
