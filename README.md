@@ -1,4 +1,4 @@
-# [API](https://en.wikipedia.org/wiki/API)[cord](https://en.wikipedia.org/wiki/Discord_(software)) Discord [![Run on Repl.it](https://repl.it/badge/github/APIcord/discord)](https://repl.it/github/APIcord/discord)
+# [API](https://en.wikipedia.org/wiki/API)[cord](https://en.wikipedia.org/wiki/Discord_(software)) Discord [![Run on Repl.it](https://repl.it/badge/github/APIcord/discord)](https://repl.it/github/APIcord/APIcord)
 ## Features
 - [Coffee Images](https://coffee.alexflipnote.dev)
 - [Dog Images](https://dog.ceo/dog-api)
