@@ -11,6 +11,7 @@ discord = "^1.0.1"
 flask = "^1.1.2"
 urllib3 = "^1.26.2"
 google-trans-new = "^1.1.9"
+mcstatus = "^5.1.1"
 
 [tool.poetry.dev-dependencies]
 
