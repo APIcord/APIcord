@@ -5,16 +5,19 @@ from colorama import init, Fore, Back, Style
 import random
 import discord
 from discord.ext import commands
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory #, request
+import asyncio
 from threading import Thread
 import json
 import os.path
 import urllib3
+import urllib.request
 from datetime import date
 from google_trans_new import google_translator
+from mcstatus import MinecraftServer
 # import cairosvg
 
-__version__ = "Alpha 3.2"
+__version__ = "Alpha 3.3"
 prefix = os.getenv("PREFIX")
 color = os.getenv("COLOR")
 
@@ -93,7 +96,7 @@ def logsenv():
     os.system("cls" if os.name=="nt" else "clear")
     ascii()
   print(Style.RESET_ALL)
-app = Flask("")
+app = Flask("APIcord")
 logsenv()
 
 ascii()
@@ -101,41 +104,42 @@ print(f"{Back.WHITE}{Fore.BLACK}---- LOGS ----")
 logsenv()
 
 # Color
-if color == ("red"):
-  botcolor= (0xff0000)
-elif color == ("grey"):
-  botcolor = (0xffffff)
-elif color == ("white"):
-  botcolor = (0xffffff)
-elif color == ("black"):
-  botcolor == (0x000000)
-elif color == ("blue_metalic"):
-  botcolor = (0xfff)
-elif color == ("green"):
-  botcolor == (0xff000)
-elif color == ("light_blue"):
-  botcolor = (0x00fbff)
-elif color == ("yellow"):
-  botcolor = (0xffee00)
-elif color == ("orange"):
-  botcolor = (0xff8800)
-elif color == ("orange_light"):
-  botcolor = (0xff9500)
-else:
-  botcolor = (color)
+if color == ("red"): botcolor= (0xff0000)
+elif color == ("grey"): botcolor = (0xffffff)
+elif color == ("white"): botcolor = (0xffffff)
+elif color == ("black"): botcolor == (0x000000)
+elif color == ("blue_metalic"): botcolor = (0xfff)
+elif color == ("green"): botcolor == (0xff000)
+elif color == ("light_blue"): botcolor = (0x00fbff)
+elif color == ("yellow"): botcolor = (0xffee00)
+elif color == ("orange"): botcolor = (0xff8800)
+elif color == ("orange_light"): botcolor = (0xff9500)
+else: botcolor = (color)
 # Status
+async def status():
+  while True:
+    await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=2, name=prefix + "help"))
+    await asyncio.sleep(7)
+    await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=3, name="memes"))
+    await asyncio.sleep(5)
+    await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=2, name=prefix + "help"))
+    await asyncio.sleep(7)
+    await bot.change_presence(status=discord.Status.dnd, activity=discord.Activity(type=3, name="anime"))
+    await asyncio.sleep(5)
+    await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=2, name=prefix + "help"))
+    await asyncio.sleep(7)
+    await bot.change_presence(status=discord.Status.dnd, activity=discord.Activity(type=5, name="#HidroGang"))
+    await asyncio.sleep(5)
+    await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=2, name=prefix + "help"))
+    await asyncio.sleep(7)
+    await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=1, name="The OneCoin Adventure"))
+    await asyncio.sleep(5)
+    await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=2, name=prefix + "help"))
+    await asyncio.sleep(7)
+
 @bot.event
 async def on_ready():
-  if os.getenv("STATUS_TYPE") == "online":
-    await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="APIs | " + prefix + "help"))
-  elif os.getenv("STATUS_TYPE") == "idle":
-    await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=discord.ActivityType.watching, name="APIs | " + prefix + "help"))
-  elif os.getenv("STATUS_TYPE") == "dnd":
-    await bot.change_presence(status=discord.Status.dnd, activity=discord.Activity(type=discord.ActivityType.watching, name="APIs | " + prefix + "help"))
-  elif os.getenv("STATUS_TYPE") == "do_not_disturb":
-    await bot.change_presence(status=discord.Status.dnd, activity=discord.Activity(type=discord.ActivityType.watching, name="APIs | " + prefix + "help"))
-  else:
-    await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="APIs | " + prefix + "help"))
+  bot.loop.create_task(status())
   
 # Good part
 
@@ -159,12 +163,14 @@ async def help(ctx):
 async def info(ctx, category):
   if category == "meme":
     embed=discord.Embed(title="Meme commands", description="", color=botcolor)
-    embed.add_field(name=prefix + "reddit", value="Random Reddit meme", inline=True)
+    embed.add_field(name=prefix + "dankgentina", value="Random meme from Dankgentina (Argentina's dank memer community)", inline=True)
+    embed.add_field(name=prefix + "meme", value="Random Reddit meme", inline=True)
     embed.add_field(name=prefix + "meme generator", value="Meme generator help (Please read it before use it)", inline=True)
     embed.add_field(name=prefix + "gmeme <template url> <top text> <bottom text>", value="Meme generator", inline=True)
+    embed.add_field(name=prefix + "hispameme/memES", value="Random Reddit meme in spanish", inline=True)
     await ctx.send(embed=embed)
   elif category == "img":
-    embed=discord.Embed(title="Image commands", description=prefix + "img", color=botcolor)
+    embed=discord.Embed(title="Image commands", color=botcolor)
     embed.add_field(name=prefix + "img coffee", value="Random coffee image", inline=True)
     embed.add_field(name=prefix + "img dog", value="Random dog image", inline=True)
     embed.add_field(name=prefix + "img cat", value="Random cat image", inline=True)
@@ -173,6 +179,7 @@ async def info(ctx, category):
     embed.add_field(name=prefix + "img bird", value="Random bird image", inline=True)
     embed.add_field(name=prefix + "img fox", value="Random fox image", inline=True)
     embed.add_field(name=prefix + "img koala", value="Random koala image", inline=True)
+    embed.add_field(name=prefix + "polandballimg", value="Random images/gifs from the Polandball's Reddit communities", inline=True)
     await ctx.send(embed=embed)
   elif category == "fact":
     embed=discord.Embed(title="Facts", description=prefix + "fact", color=botcolor)
@@ -205,6 +212,7 @@ async def info(ctx, category):
     embed.add_field(name=prefix + "delete <amount>", value="Delete message", inline=True)
     embed.add_field(name=prefix + "hug", value="A hug, for you, my friend", inline=True)
     embed.add_field(name=prefix + "motd", value="Read the message of the day!", inline=True)
+    embed.add_field(name=prefix + "mjs <address>", value="Info of a Minecraft: Java Edition server", inline=True)
     embed.add_field(name=prefix + "say <words>", value="The bot something for you", inline=True)
     embed.add_field(name=prefix + "purge <amount>", value="Delete message", inline=True)
     embed.add_field(name=prefix + "xkcd <0 (Current) /number>", value="Read a comic of xkcd! IN APICORD!!!", inline=True)
@@ -221,10 +229,11 @@ async def motd(ctx):
 @bot.command()
 async def img(ctx, *, something):
   if something == "coffee":
-    jdat = (http.request('GET', 'https://coffee.alexflipnote.dev/random.json'))
-    jsdata = (json.loads(jdat.data.decode('utf-8')))
+    #jdat = (http.request('GET', 'https://coffee.alexflipnote.dev/random.json'))
+    #jsdata = (json.loads(jdat.data.decode('utf-8')))
     embed=discord.Embed(title=("Here you have your coffee"), description=(""), color=(botcolor))
-    embed.set_image(url=(jsdata['file']))
+    #embed.set_image(url=(jsdata['file']))
+    embed.set_image(url="https://coffee.alexflipnote.dev/random")
     embed.set_footer(text="Powered by **Coffee API**")
     await ctx.send(embed=embed)
   elif something == "dog":
@@ -279,7 +288,7 @@ async def img(ctx, *, something):
   else:
     await ctx.send("error, please put a valid command")
 
-@bot.command(aliases=["gm"])
+@bot.command(aliases=["gm"], help="Meme generator")
 async def gmeme(ctx, image, top_text, bottom_text):
   if image.endswith(".jpg"):
     img_type = ".jpg"
@@ -403,6 +412,125 @@ async def hug(ctx):
     await ctx.send(jsdata['link'] + "\nPowered by Some Random Api")
 
 @bot.command()
+async def LuCaptcha(ctx):
+    jdat = (http.request('GET', 'https://lucaptcha.l64.repl.co/api'))
+    jsdata = (json.loads(jdat.data.decode('utf-8')))
+    await ctx.send(jsdata['url'])
+
+@bot.command(aliases=["memES", "memesesp"], help="Random Reddit memes in spanish")
+async def hispameme(ctx):
+  random_channel = random.randint(1, 8)
+  if random_channel == 1:
+    sub = "DylanteroYT"
+    #subicon = "https://styles.redditmedia.com/t5_2q2ypv/styles/communityIcon_j6h72o0pkg561.jpg"
+    subicon = ""
+  elif random_channel == 2:
+    sub = "MoaiGreddit"
+    #subicon = "https://styles.redditmedia.com/t5_2rks8q/styles/communityIcon_d6ndg66saz451.jpg"
+    subicon = ""
+  elif random_channel == 3:
+    sub = "aweonasogang"
+    #subicon = "https://styles.redditmedia.com/t5_2v7upg/styles/communityIcon_lj3o4qlh29g51.png"
+    subicon = ""
+  elif random_channel == 4:
+    sub = "memessanos"
+    subicon = ""
+  elif random_channel == 5:
+    sub = "DankHispano"
+    subicon = ""
+  elif random_channel == 6:
+    sub = "SpanishMeme"
+    #subicon = "https://styles.redditmedia.com/t5_ylxdt/styles/communityIcon_b386b28fh5r31.png"
+    subicon = ""
+  elif random_channel == 7:
+    sub = "Divertido"
+    subicon = ""
+  elif random_channel == 8:
+    sub = "MAAU"
+    #subicon = "https://styles.redditmedia.com/t5_11oz5w/styles/communityIcon_zsn8p1tvbu861.jpg"
+    subicon = ""
+  
+  if subicon == "": finalicon = "https://www.redditstatic.com/desktop2x/img/favicon/favicon-32x32.png"
+  else: finalicon = subicon
+  jsondori1 = http.request("GET", "https://meme-api.herokuapp.com/gimme/" + sub + "/1")
+  jsondori = jsondori1.data.decode("utf-8")
+  jsd1 = jsondori.replace('{"count":1,"memes":[{', "{")
+  jsd2 = jsd1.replace('}]}', "}")
+  jsdata = json.loads(jsd2)
+  if jsdata['nsfw'] == "true":
+    embed=discord.Embed(title="This meme is NSFW", description=("Please, use " + prefix + "reddit again"), color=botcolor)
+    await ctx.send(embed=embed)
+  else:
+    #Embed
+    embed_two=discord.Embed(title=jsdata["title"], url=jsdata["postLink"], description="", color=botcolor)
+    # embed_two.set_author(name=(jsdata['author']), url=("https://reddit.com/u/" + jsdata['author']), icon_url=("https://www.redditstatic.com/desktop2x/img/favicon/android-icon-192x192.png"))
+    embed_two.set_thumbnail(url=finalicon)
+    embed_two.add_field(name="Posted by:", value=("u/" + jsdata['author']), inline=(True))
+    embed_two.add_field(name="Subreddit:", value=("r/" + jsdata['subreddit']), inline=(True))
+    embed_two.set_image(url=jsdata['url'])
+    embed_two.set_footer(text="Powered by Dev Daksan's Meme API")
+    await ctx.send(embed=embed_two)
+
+@bot.command(aliases=["polandballimg"], help="Random images/gifs from the Polandball's Reddit communities")
+async def polandimg(ctx):
+  random_channel = random.randint(1, 5)
+  if random_channel == 1:
+    sub = "Polandballart"
+    subicon = "https://b.thumbs.redditmedia.com/90BOzYmbqrhAtDqkXbezKndFSCOevamNbmzotJjBUHw.png"
+  elif random_channel == 2:
+    sub = "polandballgifs"
+    subicon = "https://b.thumbs.redditmedia.com/tFgN1p4tLqvsAxsPVVlSFJODGRCAAOBZOksXrDLqegM.png"
+  elif random_channel == 3:
+    sub = "polandball"
+    subicon = "https://styles.redditmedia.com/t5_2sih3/styles/communityIcon_l69wbaw33cq41.png"
+  elif random_channel == 4:
+    sub = "countryballs_comics"
+    subicon = "https://styles.redditmedia.com/t5_3iv6q/styles/communityIcon_9oqufn9nns441.png"
+  elif random_channel == 5:
+    sub = "stateball"
+    subicon = "https://b.thumbs.redditmedia.com/PAvVAFCyxj3fe8XMUnpxn0hlHLvacRpXHNyVYhjykzk.png"
+  
+  finalicon = subicon
+  jsondori1 = http.request("GET", "https://meme-api.herokuapp.com/gimme/" + sub + "/1")
+  jsondori = jsondori1.data.decode("utf-8")
+  jsd1 = jsondori.replace('{"count":1,"memes":[{', "{")
+  jsd2 = jsd1.replace('}]}', "}")
+  jsdata = json.loads(jsd2)
+  if jsdata['nsfw'] == "true":
+    embed=discord.Embed(title="This meme is NSFW", description=("Please, use " + prefix + "reddit again"), color=botcolor)
+    await ctx.send(embed=embed)
+  else:
+    #Embed
+    embed_two=discord.Embed(title=jsdata["title"], url=jsdata["postLink"], description="", color=botcolor)
+    # embed_two.set_author(name=(jsdata['author']), url=("https://reddit.com/u/" + jsdata['author']), icon_url=("https://www.redditstatic.com/desktop2x/img/favicon/android-icon-192x192.png"))
+    embed_two.set_thumbnail(url=finalicon)
+    embed_two.add_field(name="Posted by:", value=("u/" + jsdata['author']), inline=(True))
+    embed_two.add_field(name="Subreddit:", value=("r/" + jsdata['subreddit']), inline=(True))
+    embed_two.set_image(url=jsdata['url'])
+    embed_two.set_footer(text="Powered by Dev Daksan's Meme API")
+    await ctx.send(embed=embed_two)
+
+@bot.command(aliases=["Dankgentina", "dankargentina"], help="Random meme from r/dankgentina, the dank argentinian memer community")
+async def dankgentina(ctx):
+  jsondori1 = http.request("GET", "https://meme-api.herokuapp.com/gimme/dankgentina/1")
+  jsondori = jsondori1.data.decode("utf-8")
+  jsd1 = jsondori.replace('{"count":1,"memes":[{', "{")
+  jsd2 = jsd1.replace('}]}', "}")
+  jsdata = json.loads(jsd2)
+  if jsdata['nsfw'] == "true":
+    embed=discord.Embed(title=("This meme is NSFW"), description=("Please, use " + prefix + "reddit again"), color=(botcolor))
+    await ctx.send(embed=embed)
+  else:
+    #Embed
+    embed_two=discord.Embed(title=(jsdata['title']), url=(jsdata['postLink']), description=(""), color=(botcolor))
+    embed_two.set_thumbnail(url="https://styles.redditmedia.com/t5_3hksc/styles/communityIcon_xopljlxcq7g31.png")
+    embed_two.add_field(name="Posted by:", value=("u/" + jsdata['author']), inline=(True))
+    embed_two.add_field(name="Subreddit:", value=("r/" + jsdata['subreddit']), inline=(True))
+    embed_two.set_image(url=jsdata['url'])
+    embed_two.set_footer(text="Powered by Dev Daksan's Meme API")
+    await ctx.send(embed=embed_two)
+
+@bot.command(aliases=["rmeme", "givemeameme", "gimmeameme"], help="Random Reddit meme")
 async def reddit(ctx):
   # if memetype == "meme":
   #  jdat = (http.request('GET', 'https://some-random-api.ml/meme'))
@@ -459,7 +587,7 @@ async def invite(ctx):
 
 @bot.command()
 async def issues(ctx):
-  await ctx.send("https://github.com/APIcord/discord/issues")
+  await ctx.send("https://github.com/APIcord/APIcord/issues")
 
 @bot.command()
 async def about(ctx):
@@ -469,10 +597,38 @@ async def about(ctx):
   embed_two.add_field(name="Owner:", value=os.getenv("OWNER"), inline=True)
   embed_two.add_field(name="Prefix:", value=os.getenv("PREFIX"), inline=True)
   embed_two.add_field(name="Number of servers:", value=f"{len(bot.guilds)} servers", inline=True)
-  embed_two.add_field(name="Version of APIcord:", value=f"{__version__} servers", inline=True)
+  embed_two.add_field(name="Version of APIcord:", value=f"{__version__}", inline=True)
   embed_two.set_footer(text="Bot software powered by APIcord")
   await ctx.send(embed=embed_two)
 
+@bot.command(pass_context=True)
+async def aaa(ctx):
+  await ctx.send(ctx.message)
+
+@bot.command(pass_context=True)
+async def guild(ctx):
+  await ctx.send(ctx.message.guild.id)
+
+@bot.command(pass_context=True)
+async def usersee(ctx):
+  original = ctx.message.author.mention
+  result1 = original.replace("@", "", 1)
+  result2 = result1.replace("<", "", 1)
+  result3 = result2.replace(">", "", 1)
+  await ctx.send(result3)
+"""
+@bot.command()
+async def getname(ctx, member: discord.Member):
+  await ctx.send(f'User name: {member.name}#{member.discriminator}, id: {member.id}')
+@bot.command()
+async def myinfo(ctx):
+  await ctx.send(bot.user)
+# .mention
+
+@bot.command()
+async def ServerInfo(ctx):
+  await ctx.send("Name: " + ctx.guild)
+"""
 @bot.command(aliases=["apicord", "cord"])
 async def credits(ctx):
   embed=discord.Embed(title=f"APIcord v{__version__}", description="Credits", color=botcolor)
@@ -488,20 +644,19 @@ async def credits(ctx):
   embed.add_field(name="chucknorris.io", value="by **chucknorris.io** \n (" + prefix + "chucknorris)", inline=True)
   embed.add_field(name="xkcd's JSON interface", value="by **Randall Munroe** \n (" + prefix + "xkcd)", inline=True)
   embed.add_field(name="Some Random Api", value="by **Seif Mansour**, **Taka Inzori**, **Excigma** & **Telk** \n (" + prefix + "img cat, " + prefix + "img panda, " + prefix + "img red panda, " + prefix + "img bird, " + prefix + "img fox, " + prefix + "img koala, " + prefix + "hug, " + prefix + "fact cat, " + prefix + "fact dog, " + prefix + "fact panda, " + prefix + "fact fox, " + prefix + "fact bird & " + prefix + "fact koala)", inline=False)
-  embed.add_field(name="-- LIBRARIES --", value="used", inline=False)
-  embed.add_field(name="urllib3", value="by **urllib3 community**", inline=True)
-  embed.add_field(name="Colorama", value="by **Jonathan Hartley & contributors**", inline=True)
-  embed.add_field(name="google_trans_new", value="by **lushan88a**", inline=True)
-  embed.add_field(name="Discord", value="yes, I made a section for 1 library", inline=False)
-  embed.add_field(name="discord.py", value="by **Rapptz and the discord.py community**", inline=True)
-  embed.add_field(name="Telegram", value="Coming soon", inline=False)
-  embed.add_field(name="pyTelegramBotAPI", value="by **Frank Wang and the pyTelegramBotAPI community**", inline=True)
-  embed.add_field(name="python-telegram-bot", value="by **python-telegram-bot community**", inline=True)
-  embed.add_field(name="Web interface", value="(and the website)", inline=False)
+  embed.add_field(name="-- LIBRARIES & THINGS USED --", value="used", inline=False)
   embed.add_field(name="Bootstrap", value="by **Twitter, Inc. & The Bootstrap Authors**", inline=True)
+  embed.add_field(name="Colorama", value="by **Jonathan Hartley & contributors**", inline=True)
+  embed.add_field(name="discord.py", value="by **Rapptz and the discord.py community**", inline=True)
+  embed.add_field(name="google_trans_new", value="by **lushan88a**", inline=True)
   embed.add_field(name="Fork Awesome", value="by **Fork Awesome**", inline=True)
   embed.add_field(name="Flask", value="by **Armin Ronacher**", inline=True)
   embed.add_field(name="keep_alive.py", value="by **TheDrone7**", inline=True)
+  embed.add_field(name="MC-API", value="by **njb-said & nathantowell**", inline=True)
+  embed.add_field(name="mcstatus", value="by **Dinnerbone & kevinkjt2000**", inline=True)
+  embed.add_field(name="pyTelegramBotAPI", value="by **Frank Wang and the pyTelegramBotAPI community**", inline=True)
+  embed.add_field(name="python-telegram-bot", value="by **python-telegram-bot community**", inline=True)
+  embed.add_field(name="urllib3", value="by **urllib3 community**", inline=True)
   embed.add_field(name="-- SPECIAL THANKS --", value="used", inline=False)
   embed.add_field(name="@doodlei_ (Instagram)", value="for the logotype", inline=True)
   embed.add_field(name="Discord Extreme List guys", value="for some help", inline=True)
@@ -510,21 +665,25 @@ async def credits(ctx):
   embed.add_field(name="Repl.it", value="for hosting (for the original bot and the development bot) and the IDE", inline=True)
   await ctx.send(embed=embed)
 
-@bot.command(aliases=["licenses"])
-async def license(ctx):
+@bot.command(aliases=["license"])
+async def licenses(ctx):
   embed=discord.Embed(title="Licenses", description="", color=botcolor)
-  embed.add_field(name="APIcord", value="MIT License (© 2020 absucc)", inline=True)
-  embed.add_field(name="Bootstrap", value="MIT License (© 2011-2020 Twitter, Inc. & The Bootstrap Authors)", inline=True)
+  embed.add_field(name="APIcord", value="MIT License (© 2020-2021 Absucc)", inline=True)
+  embed.add_field(name="Bootstrap", value="MIT License (© 2011-2021 Twitter, Inc. & The Bootstrap Authors)", inline=True)
   embed.add_field(name="Coffee API", value="MIT License (© 2020 AlexFlipnote)", inline=True)
   embed.add_field(name="Colorama", value="BSD-3-Clause License", inline=True)
-  embed.add_field(name="Discord.py", value="MIT License (© 2015-2021 Rapptz)", inline=True)
+  embed.add_field(name="Discord.py", value="MIT License (© 2015-present Rapptz)", inline=True)
   embed.add_field(name="Dog CEO Image Library", value="GNU General Public License v3.0", inline=True)
   embed.add_field(name="Flask", value="BSD-3-Clause License", inline=True)
   embed.add_field(name="Fork Awesome", value="SIL OFL 1.1 (Font) & MIT License (CSS, LESS and Sass)", inline=True)
   embed.add_field(name="google_trans_new", value="MIT License (© 2020 lushan88a)", inline=True)
+  embed.add_field(name="mcstatus", value="Apache License 2.0", inline=True)
   embed.add_field(name="memegen.link", value="MIT License (© 2020 Jace Browning)", inline=True)
   embed.add_field(name="Meme API", value="MIT License (© 2020 Dev Daksan P S)", inline=True)
-  embed.add_field(name="Some Random Api (SRA)", value="Apache License 2.0")
+  embed.add_field(name="Some Random Api (SRA)", value="Apache License 2.0", inline=True)
+  embed.add_field(name="--TRADE MARKS--", value="(R)", inline=False)
+  #embed.add_field(name="Some Random Api, SRA, and the SRA Logo", value="")
+  embed.add_field(name="Google, Google Translate, and the Google & Google Translate Logos", value="are trademarks of Google, LLC.")
   await ctx.send(embed=embed)
 
 @bot.command()
@@ -555,27 +714,53 @@ async def purge(ctx, the_limit: int):
 
 @bot.command()
 async def xkcd(ctx, numberz: int):
+  if os.getenv("XKMODERN") == "1":
+    if os.getenv("XKMODERN_INSTANCE") == "0":
+      urlbase = "https://xkcd.l64.repl.co/?num="
+    else:
+      urlbase = "http://" + os.getenv("XKMODERN_INSTANCE") + "/?num="
+  else:
+    urlbase = "https://xkcd.com/"
   if numberz == 0:
-    jdat = (http.request('GET', 'https://xkcd.com/info.0.json'))
-    jsdata = (json.loads(jdat.data.decode('utf-8')))
-    embed=discord.Embed(title=(jsdata["title"]), description="N° " + str(jsdata["num"]) + " | " + jsdata["month"] + "/" + jsdata["day"] + "/" + jsdata["year"], color=botcolor)
+    jsdat = (http.request("GET", "https://xkcd.com/info.0.json"))
+    jsdata = (json.loads(jsdat.data.decode("utf-8")))
+    embed=discord.Embed(title=jsdata["title"], url=urlbase + str(jsdata["num"]), description="N° " + str(jsdata["num"]) + " | " + jsdata["month"] + "/" + jsdata["day"] + "/" + jsdata["year"], color=botcolor)
     embed.set_image(url=jsdata["img"])
     embed.set_footer(text="Powered by xkcd's JSON interface")
     await ctx.send(embed=embed)
   else:
-    jdat = (http.request("GET", "https://xkcd.com/" + str(numberz) + "/info.0.json"))
-    jsdata = (json.loads(jdat.data.decode("utf-8")))
-    embed=discord.Embed(title=jsdata["title"], description="N° " + str(jsdata["num"]) + " | " + jsdata["month"] + "/" + jsdata["day"] + "/" + jsdata["year"], color=botcolor)
+    jsdat = (http.request("GET", "https://xkcd.com/" + str(numberz) + "/info.0.json"))
+    jsdata = (json.loads(jsdat.data.decode("utf-8")))
+    embed=discord.Embed(title=jsdata["title"], url=urlbase + str(jsdata["num"]), description="N° " + str(jsdata["num"]) + " | " + jsdata["month"] + "/" + jsdata["day"] + "/" + jsdata["year"], color=botcolor)
     embed.set_image(url=jsdata["img"])
     embed.set_footer(text="Powered by xkcd's JSON interface")
     await ctx.send(embed=embed)
 
-@bot.command(aliases=['t'])
+@bot.command()
+async def mjs(ctx, url: str):
+  server = MinecraftServer.lookup(url)
+  status = server.status()
+  #query = server.query()
+  image_name = str(random.randint(0, 1000000000000000))
+  #final_image = "https://mcapi.l64.repl.co/favicon/" + url
+  urllib.request.urlretrieve(status.favicon, f"cache/{image_name}.png")
+  embed=discord.Embed(title=url, description=str(status.description), color=botcolor)
+  embed.set_thumbnail(url=f'{os.getenv("WEBSERVERURL")}/cache/{image_name}.png')
+  embed.add_field(name="People online", value=str(status.players.online) + "/" + str(status.players.max), inline=True)
+  embed.add_field(name="Version", value=status.version.name, inline=True)
+  embed.add_field(name="Ping", value=str(status.latency), inline=True)
+  embed.set_footer(text="Powered by mcstatus")
+  await ctx.send(embed=embed)
+
+
+@bot.command(aliases=["t"])
 async def translate(ctx, lang: str, *, query: str):
-  one = gtrans.translate([query], lang_tgt=lang)
+  one = gtrans.translate(query, lang_tgt=lang)
   two = one.replace("[\'", "")
   three = two.replace("\']", "")
-  await ctx.send(three)
+  embed=discord.Embed(description=three, color=botcolor)
+  embed.set_footer(text="Powered by Google Translate")
+  await ctx.send(embed=embed)
 
 @bot.command(aliases=["hgang", "Hgang", "HGang", "H", "h", "jointhehgang"])
 async def joinhgang(ctx):
@@ -612,28 +797,22 @@ async def christmas(ctx):
 
     
 # WEBSERVER
-if os.getenv("REPL.IT") == "1":
-  enwebserver = True
-  host_flask = "0.0.0.0"
-  if os.getenv("PORT") == "80":
-    port_flask = "5000"
-  else:
-    port_flask = os.getenv("PORT")
-else:
-  if os.getenv("WEBSERVER") == "1":
-    enwebserver = True
-    host_flask = os.getenv("HOST")
-    port_flask = os.getenv("PORT")
+enwebserver = True
+if os.getenv("REPL.IT") == "1": host_flask = "0.0.0.0"
+else: host_flask = os.getenv("HOST")
+
+if os.getenv("PORT") == "80": port_flask = "5000"
+else: port_flask = os.getenv("PORT")
 
 if enwebserver == True:
   @app.errorhandler(404)
   def error404(error):
     logsenv()
-    return render_template("errors/404.html", **locals()),404
+    return render_template("error.html", **locals(), number="404", subtitle="Page not found"),404
   @app.errorhandler(500)
   def error500(error):
     logsenv()
-    return render_template("errors/500.html", **locals()),500
+    return render_template("error.html", **locals(), number="500", subtitle="Internal server error"),500
 
   @app.route("/")
   def main():
@@ -643,9 +822,13 @@ if enwebserver == True:
   def privacya():
     logsenv()
     return render_template("privacy.html", **locals())
+  @app.route("/cache/<path:cache>")
+  def cachedir(cache):
+    logsenv()
+    return send_from_directory("cache", cache)
 
   def run():
-    app.run(host=host_flask, port=port_flask)
+    app.run(debug=False, host=host_flask, port=port_flask)
     logsenv()
 
   # Code from https://repl.it/@TheDrone7/discordpy-rewrite#keep_alive.py
