@@ -17,7 +17,7 @@ from google_trans_new import google_translator
 from mcstatus import MinecraftServer
 # import cairosvg
 
-__version__ = "Alpha 3.3.1 (WIP)"
+__version__ = "Alpha 3.3.1"
 prefix = os.getenv("PREFIX")
 color = os.getenv("COLOR")
 
