@@ -17,7 +17,7 @@ from google_trans_new import google_translator
 from mcstatus import MinecraftServer
 # import cairosvg
 
-__version__ = "Alpha 3.3.1"
+__version__ = "Alpha 3.3.1 (WIP)"
 prefix = os.getenv("PREFIX")
 color = os.getenv("COLOR")
 
@@ -79,16 +79,11 @@ yyyy{Back.WHITE}{Fore.WHITE}oy{Fore.RED}{Back.RED}hhhhhhhyyhhhhh
 yyyyyyhhhhhhhhhhhhhh{Style.RESET_ALL} v{__version__}
 {Style.RESET_ALL}""")
 def ascii():
-  if os.getenv("ASCII_ART") == "classic":
-    classic_ascii()
-  elif os.getenv("ASCII_ART") == "matrix":
-    matrix_ascii()
-  elif os.getenv("ASCII_ART") == "extra":
-    extra_ascii()
-  elif os.getenv("ASCII_ART") == "experimental":
-    experimental_ascii()
-  else:
-    print("[BANNER NOT FOUND]")
+  if os.getenv("ASCII_ART") == "classic": classic_ascii()
+  elif os.getenv("ASCII_ART") == "matrix": matrix_ascii()
+  elif os.getenv("ASCII_ART") == "extra": extra_ascii()
+  elif os.getenv("ASCII_ART") == "experimental": experimental_ascii()
+  else: print("[BANNER NOT FOUND]")
 
 # logsenv() and Flask("")
 def logsenv():
@@ -104,12 +99,12 @@ print(f"{Back.WHITE}{Fore.BLACK}---- LOGS ----{Style.RESET_ALL}")
 logsenv()
 
 # Color
-if color == ("red"): botcolor= (0xff0000)
+if color == ("red"): botcolor = (0xff0000)
 elif color == ("grey"): botcolor = (0xffffff)
 elif color == ("white"): botcolor = (0xffffff)
-elif color == ("black"): botcolor == (0x000000)
+elif color == ("black"): botcolor = (0x000000)
 elif color == ("blue_metalic"): botcolor = (0xfff)
-elif color == ("green"): botcolor == (0xff000)
+elif color == ("green"): botcolor = (0xff000)
 elif color == ("light_blue"): botcolor = (0x00fbff)
 elif color == ("yellow"): botcolor = (0xffee00)
 elif color == ("orange"): botcolor = (0xff8800)
@@ -224,6 +219,12 @@ async def info(ctx, category):
 async def motd(ctx):
   motdread = open("motd.txt","r") 
   await ctx.send("Message of the day:\n```\n" + motdread.read() + "\n```")
+  motdread.close()
+
+@bot.command()
+async def changes(ctx):
+  motdread = open("changes.md","r") 
+  await ctx.send(motdread.read())
   motdread.close()
 
 @bot.command()
@@ -810,8 +811,7 @@ else:
   else: enwebserver = False
   host_flask = os.getenv("HOST")
 
-if os.getenv("PORT") == "80": port_flask = "5000"
-else: port_flask = os.getenv("PORT")
+port_flask = os.getenv("PORT")
 
 if enwebserver == True:
   @app.errorhandler(404)
