@@ -17,7 +17,7 @@ from google_trans_new import google_translator
 from mcstatus import MinecraftServer
 # import cairosvg
 
-__version__ = "Alpha 3.3"
+__version__ = "Alpha 3.3.1"
 prefix = os.getenv("PREFIX")
 color = os.getenv("COLOR")
 
@@ -100,7 +100,7 @@ app = Flask("APIcord")
 logsenv()
 
 ascii()
-print(f"{Back.WHITE}{Fore.BLACK}---- LOGS ----")
+print(f"{Back.WHITE}{Fore.BLACK}---- LOGS ----{Style.RESET_ALL}")
 logsenv()
 
 # Color
@@ -744,12 +744,16 @@ async def mjs(ctx, url: str):
   image_name = str(random.randint(0, 1000000000000000))
   #final_image = "https://mcapi.l64.repl.co/favicon/" + url
   urllib.request.urlretrieve(status.favicon, f"cache/{image_name}.png")
-  embed=discord.Embed(title=url, description=str(status.description), color=botcolor)
-  embed.set_thumbnail(url=f'{os.getenv("WEBSERVERURL")}/cache/{image_name}.png')
-  embed.add_field(name="People online", value=str(status.players.online) + "/" + str(status.players.max), inline=True)
+  embed=discord.Embed(title=url, color=botcolor)
+  if os.getenv("WEBSERVER") == "1": embed.set_thumbnail(url=f'{os.getenv("WEBSERVERURL")}/cache/{image_name}.png')
+  else: embed.set_thumbnail(url="https://mc-api.net/v3/server/favicon/" + url)
+  if status.players.max == 0: online_or_not = "Offline"
+  else: online_or_not = "Online"
+  embed.add_field(name="Status", value=online_or_not, inline=True)
+  if status.players.max != 0: embed.add_field(name="People online", value=str(status.players.online) + "/" + str(status.players.max), inline=True)
   embed.add_field(name="Version", value=status.version.name, inline=True)
   embed.add_field(name="Ping", value=str(status.latency), inline=True)
-  embed.set_footer(text="Powered by mcstatus")
+  embed.set_footer(text="Powered by mcstatus & MC-API")
   await ctx.send(embed=embed)
 
 
@@ -798,8 +802,13 @@ async def christmas(ctx):
     
 # WEBSERVER
 enwebserver = True
-if os.getenv("REPL.IT") == "1": host_flask = "0.0.0.0"
-else: host_flask = os.getenv("HOST")
+if os.getenv("REPL.IT") == "1":
+  enwebserver = True
+  host_flask = "0.0.0.0"
+else:
+  if os.getenv("WEBSERVER") == "1": enwebserver = True
+  else: enwebserver = False
+  host_flask = os.getenv("HOST")
 
 if os.getenv("PORT") == "80": port_flask = "5000"
 else: port_flask = os.getenv("PORT")
