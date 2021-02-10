@@ -1,5 +1,6 @@
 - api!changes added
 - Flask webserver isn't obligatory anymore
+- Bug fixes
 
 Update notes:
 If you deleted it, create env. variable "WEBSERVER" (number boolean)
