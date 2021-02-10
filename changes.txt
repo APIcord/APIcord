@@ -1,0 +1,7 @@
+- api!changes added
+- Flask webserver isn't obligatory anymore
+- Bugs fixed
+
+Update notes:
+If you deleted it, create env. variable "WEBSERVER" (number boolean)
+Add a "https://" or "http://" in front of "XKMODERN_INSTANCE"
