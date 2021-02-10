@@ -223,7 +223,7 @@ async def motd(ctx):
 
 @bot.command()
 async def changes(ctx):
-  motdread = open("changes.md","r") 
+  motdread = open("changes.txt","r") 
   await ctx.send(motdread.read())
   motdread.close()
 
