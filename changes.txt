@@ -1,7 +1,2 @@
-- api!changes added
-- Flask webserver isn't obligatory anymore
-- Bug fixes
-
-Update notes:
-If you deleted it, create env. variable "WEBSERVER" (number boolean)
-Add a "https://" or "http://" in front of "XKMODERN_INSTANCE"
+- api!images added
+Upload your memes on r/APIcordImages (https://reddit.com/r/APIcordImages)
