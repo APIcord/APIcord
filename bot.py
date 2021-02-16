@@ -17,7 +17,7 @@ from google_trans_new import google_translator
 from mcstatus import MinecraftServer
 # import cairosvg
 
-__version__ = "Alpha 3.3.1"
+__version__ = "Alpha 3.3.2"
 prefix = os.getenv("PREFIX")
 color = os.getenv("COLOR")
 
@@ -159,9 +159,10 @@ async def info(ctx, category):
   if category == "meme":
     embed=discord.Embed(title="Meme commands", description="", color=botcolor)
     embed.add_field(name=prefix + "dankgentina", value="Random meme from Dankgentina (Argentina's dank memer community)", inline=True)
-    embed.add_field(name=prefix + "meme", value="Random Reddit meme", inline=True)
+    embed.add_field(name=prefix + "rmeme", value="Random Reddit meme", inline=True)
     embed.add_field(name=prefix + "meme generator", value="Meme generator help (Please read it before use it)", inline=True)
     embed.add_field(name=prefix + "gmeme <template url> <top text> <bottom text>", value="Meme generator", inline=True)
+    embed.add_field(name=prefix + "images", value="Random image of r/APIcordImages", inline=True)
     embed.add_field(name=prefix + "hispameme/memES", value="Random Reddit meme in spanish", inline=True)
     await ctx.send(embed=embed)
   elif category == "img":
@@ -174,6 +175,7 @@ async def info(ctx, category):
     embed.add_field(name=prefix + "img bird", value="Random bird image", inline=True)
     embed.add_field(name=prefix + "img fox", value="Random fox image", inline=True)
     embed.add_field(name=prefix + "img koala", value="Random koala image", inline=True)
+    embed.add_field(name=prefix + "images", value="Random image of r/APIcordImages", inline=True)
     embed.add_field(name=prefix + "polandballimg", value="Random images/gifs from the Polandball's Reddit communities", inline=True)
     await ctx.send(embed=embed)
   elif category == "fact":
@@ -418,7 +420,7 @@ async def LuCaptcha(ctx):
     jsdata = (json.loads(jdat.data.decode('utf-8')))
     await ctx.send(jsdata['url'])
 
-@bot.command(aliases=["memES", "memesesp"], help="Random Reddit memes in spanish")
+@bot.command(aliases=["memES", "memesesp", "hmeme"], help="Random Reddit memes in spanish")
 async def hispameme(ctx):
   random_channel = random.randint(1, 8)
   if random_channel == 1:
@@ -527,6 +529,26 @@ async def dankgentina(ctx):
     embed_two.set_thumbnail(url="https://styles.redditmedia.com/t5_3hksc/styles/communityIcon_xopljlxcq7g31.png")
     embed_two.add_field(name="Posted by:", value=("u/" + jsdata['author']), inline=(True))
     embed_two.add_field(name="Subreddit:", value=("r/" + jsdata['subreddit']), inline=(True))
+    embed_two.set_image(url=jsdata['url'])
+    embed_two.set_footer(text="Powered by Dev Daksan's Meme API")
+    await ctx.send(embed=embed_two)
+
+@bot.command(aliases=["APIcordImages"], help="send memes xd")
+async def images(ctx):
+  jsondori1 = http.request("GET", "https://meme-api.herokuapp.com/gimme/APIcordImages/1")
+  jsondori = jsondori1.data.decode("utf-8")
+  jsd1 = jsondori.replace('{"count":1,"memes":[{', "{")
+  jsd2 = jsd1.replace('}]}', "}")
+  jsdata = json.loads(jsd2)
+  if jsdata['nsfw'] == "true":
+    embed=discord.Embed(title=("This meme is NSFW"), description=("Please, use " + prefix + "images again"), color=(botcolor))
+    await ctx.send(embed=embed)
+  else:
+    #Embed
+    embed_two=discord.Embed(title=jsdata['title'], url=jsdata['postLink'], color=botcolor)
+    embed_two.set_thumbnail(url="https://apicord.github.io/img/apicord.jpeg")
+    embed_two.add_field(name="Posted by:", value=("u/" + jsdata['author']), inline=(True))
+    embed_two.add_field(name="Subreddit:", value="r/APIcordImages", inline=True)
     embed_two.set_image(url=jsdata['url'])
     embed_two.set_footer(text="Powered by Dev Daksan's Meme API")
     await ctx.send(embed=embed_two)
@@ -848,4 +870,3 @@ if enwebserver == True:
 
   keep_alive()
 bot.run(os.getenv("TOKEN"))
-#The APIcord Team wishes you a great 2021!
