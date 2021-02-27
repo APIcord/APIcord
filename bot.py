@@ -743,7 +743,7 @@ async def purge(ctx, the_limit: int):
 async def xkcd(ctx, numberz: int):
   if os.getenv("XKMODERN") == "1":
     if os.getenv("XKMODERN_INSTANCE") == "0":
-      urlbase = "https://xkcd.l64.repl.co/?num="
+      urlbase = "https://xkcd.absucc.rf.gd/?num="
     else:
       urlbase = "http://" + os.getenv("XKMODERN_INSTANCE") + "/?num="
   else:
