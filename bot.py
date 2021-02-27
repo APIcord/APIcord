@@ -17,7 +17,7 @@ from google_trans_new import google_translator
 from mcstatus import MinecraftServer
 # import cairosvg
 
-__version__ = "Alpha 3.3.2"
+__version__ = "Alpha 3.3.3"
 prefix = os.getenv("PREFIX")
 color = os.getenv("COLOR")
 
@@ -90,7 +90,7 @@ def logsenv():
   if os.getenv("LOGS") == "0":
     os.system("cls" if os.name=="nt" else "clear")
     ascii()
-  print(Style.RESET_ALL)
+  print(Style.RESET_ALL) 
 app = Flask("APIcord")
 logsenv()
 
@@ -213,6 +213,10 @@ async def info(ctx, category):
     embed.add_field(name=prefix + "say <words>", value="The bot something for you", inline=True)
     embed.add_field(name=prefix + "purge <amount>", value="Delete message", inline=True)
     embed.add_field(name=prefix + "xkcd <0 (Current) /number>", value="Read a comic of xkcd! IN APICORD!!!", inline=True)
+    await ctx.send(embed=embed)
+    embed.add_field(name=prefix + "ranbtw <number 1> <number 2>", value="Sends a random number between <number 1> and <number 2>", inline=True)
+    await ctx.send(embed=embed)
+    embed.add_field(name=prefix + "dice", value="A dice.", inline=True)
     await ctx.send(embed=embed)
   else:
     await ctx.send("Error, please put a valid command")
@@ -778,6 +782,45 @@ async def mjs(ctx, url: str):
   embed.add_field(name="Ping", value=str(status.latency), inline=True)
   embed.set_footer(text="Powered by mcstatus & MC-API")
   await ctx.send(embed=embed)
+
+@bot.command()
+async def dice(ctx):
+  number = random.randint(1,6)
+  if number == 1: await ctx.send("""``` -------
+|       |
+|   •   |
+|       |
+ ------- ```""")
+  elif number == 2: await ctx.send("""``` -------
+|     • |
+|       |
+| •     |
+ ------- ```""")
+  elif number == 3: await ctx.send("""``` -------
+|     • |
+|   •   |
+| •     |
+ ------- ```""")
+  elif number == 4: await ctx.send("""``` -------
+| •   • |
+|       |
+| •   • |
+ ------- ```""")
+  elif number == 5: await ctx.send("""``` -------
+| •   • |
+|   •   |
+| •   • |
+ ------- ```""")
+  elif number == 6: await ctx.send("""``` -------
+| • • • |
+| • • • |
+| • • • |
+ ------- ```""")
+
+@bot.command()
+async def ranbtw(ctx, num1: int, num2: int):
+  number = random.randint(num1, num2)
+  await ctx.send(str(number))
 
 
 @bot.command(aliases=["t"])
