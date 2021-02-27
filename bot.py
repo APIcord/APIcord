@@ -745,7 +745,7 @@ async def xkcd(ctx, numberz: int):
     if os.getenv("XKMODERN_INSTANCE") == "0":
       urlbase = "https://xkcd.absucc.rf.gd/?num="
     else:
-      urlbase = "http://" + os.getenv("XKMODERN_INSTANCE") + "/?num="
+      urlbase = os.getenv("XKMODERN_INSTANCE") + "/?num="
   else:
     urlbase = "https://xkcd.com/"
   if numberz == 0:
