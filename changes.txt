@@ -1,2 +1,2 @@
-- api!images added
-Upload your memes on r/APIcordImages (https://reddit.com/r/APIcordImages)
+- api!dice & api!ranbtw (Info on api!info more)
+- Default XKmodern instance URL changed
