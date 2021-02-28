@@ -5,19 +5,19 @@ from colorama import init, Fore, Back, Style
 import random
 import discord
 from discord.ext import commands
-from flask import Flask, render_template, send_from_directory #, request
+if os.getenv("WEBSERVER") == "1" or os.getenv("REPL.IT") == "1": from flask import Flask, render_template, send_from_directory #, request
 import asyncio
 from threading import Thread
 import json
 import os.path
 import urllib3
-import urllib.request
+if os.getenv("WEBSERVER") == "1": import urllib.request
 from datetime import date
 from google_trans_new import google_translator
 from mcstatus import MinecraftServer
 # import cairosvg
 
-__version__ = "Alpha 3.3.3"
+__version__ = "Alpha 3.3.4"
 prefix = os.getenv("PREFIX")
 color = os.getenv("COLOR")
 
@@ -35,7 +35,7 @@ def classic_ascii():
 yyyyyyyyyyyyyyyyyyyy
 yyyy{Fore.WHITE}:          :{Fore.RED}yyyy
 yyyy{Fore.WHITE}. /s`:o+:::.{Fore.RED}hhyy
-yyyy{Fore.WHITE}. s+-:o/o//.{Fore.RED}hhhh {Fore.WHITE}APIcord {Fore.RESET}(by absucc){Fore.RED}
+yyyy{Fore.WHITE}. s+-:o/o//.{Fore.RED}hhhh {Fore.WHITE}APIcord {Fore.RESET}(by Absucc){Fore.RED}
 yyyy{Fore.WHITE}.-s++:o. //.{Fore.RED}hhhh {Fore.GREEN}ASCII art powered by{Fore.RED}
 yyyy{Fore.WHITE}.-.`/-:  .-.{Fore.RED}hhhh {Fore.GREEN}TEXT-IMAGE.com & Colorama{Fore.RED}
 yyyy{Fore.WHITE}.`/:.....::+{Fore.RED}hhhh
@@ -47,7 +47,7 @@ def matrix_ascii():
 yyyyyyyyyyyyyyyyyyyy
 yyyy{Fore.WHITE}:          :{Fore.GREEN}yyyy
 yyyy{Fore.WHITE}. /s`:o+:::.{Fore.GREEN}hhyy
-yyyy{Fore.WHITE}. s+-:o/o//.{Fore.GREEN}hhhh {Fore.WHITE}APIcord {Fore.RESET}(by absucc){Fore.GREEN}
+yyyy{Fore.WHITE}. s+-:o/o//.{Fore.GREEN}hhhh {Fore.WHITE}APIcord {Fore.RESET}(by Absucc){Fore.GREEN}
 yyyy{Fore.WHITE}.-s++:o. //.{Fore.GREEN}hhhh {Fore.GREEN}ASCII art powered by{Fore.GREEN}
 yyyy{Fore.WHITE}.-.`/-:  .-.{Fore.GREEN}hhhh {Fore.GREEN}TEXT-IMAGE.com & Colorama{Fore.GREEN}
 yyyy{Fore.WHITE}.`/:.....::+{Fore.GREEN}hhhh
@@ -59,7 +59,7 @@ def extra_ascii():
 yyyyyyyyyyyyyyyyyyyy
 yyyy{Back.RESET}{Fore.WHITE}:          :{Back.RED}{Fore.RED}yyyy
 yyyy{Back.RESET}{Fore.WHITE}. /s`:o+:::.{Back.RED}{Fore.RED}hhyy
-yyyy{Back.RESET}{Fore.WHITE}. s+-:o/o//.{Back.RED}{Fore.RED}hhhh{Back.RESET} {Fore.WHITE}APIcord {Fore.RESET}(by absucc){Back.RED}{Fore.RED}
+yyyy{Back.RESET}{Fore.WHITE}. s+-:o/o//.{Back.RED}{Fore.RED}hhhh{Back.RESET} {Fore.WHITE}APIcord {Fore.RESET}(by Absucc){Back.RED}{Fore.RED}
 yyyy{Back.RESET}{Fore.WHITE}.-s++:o. //.{Back.RED}{Fore.RED}hhhh{Back.RESET} {Fore.GREEN}ASCII art powered by{Back.RED}{Fore.RED}
 yyyy{Back.RESET}{Fore.WHITE}.-.`/-:  .-.{Back.RED}{Fore.RED}hhhh{Back.RESET} {Fore.GREEN}TEXT-IMAGE.com & Colorama{Back.RED}{Fore.RED}
 yyyy{Back.RESET}{Fore.WHITE}.`/:.....::+{Back.RED}{Fore.RED}hhhh
@@ -71,7 +71,7 @@ def experimental_ascii():
 yyyyyyyyyyyyyyyyyyyy
 yyyy{Back.WHITE}{Fore.WHITE}:          :{Fore.RED}{Back.RED}yyyy
 yyyy{Back.WHITE}{Fore.WHITE}.{Fore.RED} /s`:o+:::.{Fore.RED}{Back.RED}hhyy
-yyyy{Back.WHITE}{Fore.WHITE}.{Fore.RED} s{Fore.WHITE}+{Fore.RED}-:o/o//.{Fore.RED}{Back.RED}hhhh{Back.RESET} {Fore.WHITE}APIcord (by absucc){Back.RESET}{Fore.RED}{Back.RED}
+yyyy{Back.WHITE}{Fore.WHITE}.{Fore.RED} s{Fore.WHITE}+{Fore.RED}-:o/o//.{Fore.RED}{Back.RED}hhhh{Back.RESET} {Fore.WHITE}APIcord (by Absucc){Back.RESET}{Fore.RED}{Back.RED}
 yyyy{Back.WHITE}{Fore.WHITE}.{Fore.RED}-s++:o. //.{Fore.RED}{Back.RED}hhhh{Back.RESET} {Fore.GREEN}ASCII art powered by{Fore.RED}{Back.RED}
 {Back.RED}yyyy{Back.WHITE}.-.{Fore.WHITE}`/{Fore.RED}-:  .-.{Fore.RED}{Back.RED}hhhh{Back.RESET} {Fore.GREEN}TEXT-IMAGE.com & Colorama{Fore.RED}{Back.RED}
 yyyy{Back.WHITE}{Fore.WHITE}.`{Fore.RED}/:{Fore.WHITE}.....::+{Fore.RED}{Back.RED}hhhh
@@ -209,13 +209,11 @@ async def info(ctx, category):
     embed.add_field(name=prefix + "delete <amount>", value="Delete message", inline=True)
     embed.add_field(name=prefix + "hug", value="A hug, for you, my friend", inline=True)
     embed.add_field(name=prefix + "motd", value="Read the message of the day!", inline=True)
-    embed.add_field(name=prefix + "mjs <address>", value="Info of a Minecraft: Java Edition server", inline=True)
+    embed.add_field(name=prefix + "mjs <address>", value="Info of a Minecraft: Java Edition server [WIP]", inline=True)
     embed.add_field(name=prefix + "say <words>", value="The bot something for you", inline=True)
     embed.add_field(name=prefix + "purge <amount>", value="Delete message", inline=True)
     embed.add_field(name=prefix + "xkcd <0 (Current) /number>", value="Read a comic of xkcd! IN APICORD!!!", inline=True)
-    await ctx.send(embed=embed)
     embed.add_field(name=prefix + "ranbtw <number 1> <number 2>", value="Sends a random number between <number 1> and <number 2>", inline=True)
-    await ctx.send(embed=embed)
     embed.add_field(name=prefix + "dice", value="A dice.", inline=True)
     await ctx.send(embed=embed)
   else:
@@ -294,6 +292,8 @@ async def img(ctx, *, something):
     await ctx.send(embed=embed)
   else:
     await ctx.send("error, please put a valid command")
+
+
 
 @bot.command(aliases=["gm"], help="Meme generator")
 async def gmeme(ctx, image, top_text, bottom_text):
@@ -660,7 +660,7 @@ async def ServerInfo(ctx):
 async def credits(ctx):
   embed=discord.Embed(title=f"APIcord v{__version__}", description="Credits", color=botcolor)
   embed.add_field(name="-- CREW --", value=":)", inline=False)
-  embed.add_field(name="Creator and programmer", value="error#7900 (absucc)", inline=True)
+  embed.add_field(name="Creator and programmer", value="error#7900 (Absucc)", inline=True)
   embed.add_field(name="-- APIS --", value="used in this project", inline=False)
   embed.add_field(name="Coffee API", value="by **Alex Flipnote** \n (" + prefix + "img coffee)", inline=True)
   embed.add_field(name="Dog API", value="by **Elliott Landsborough**, **Eduard Moya** & **Kathie Wu** \n (" + prefix + "img dog)", inline=True)
@@ -715,11 +715,11 @@ async def licenses(ctx):
 
 @bot.command()
 async def privacy(ctx):
-  await ctx.send("https://apicord.github.io/privacy.html")
+  await ctx.send("https://apicord.rf.gd/privacy.html")
 
 @bot.command()
 async def code(ctx):
-  await ctx.send("https://github.com/APIcord/discord\nhttps://gitlab.com/APIcord/discord (Mirror)")
+  await ctx.send("https://github.com/APIcord/APIcord\nhttps://gitlab.com/APIcord/discord (Mirror)")
 
 @bot.command()
 async def say(ctx, *, yourmessage):
@@ -727,9 +727,9 @@ async def say(ctx, *, yourmessage):
     await ctx.send("**REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE**")
   elif yourmessage == "BigF":
     await ctx.send("FFFFFFFFFF\nFFFFFFFFFF\nFFF\nFFFFFF \nFFFFFF\nFFF\nFFF\nFFF")
-  elif yourmessage == "polkingbot":
-    embed=discord.Embed(title="**MonsterWorld**", url="https://discord.com/oauth2/authorize?client_id=756602085298143412&scope=bot&permissions=2147483647", description="Bot recomendado", color=botcolor)
-    await ctx.send(embed=embed)
+  #elif yourmessage == "polkingbot":
+  #  embed=discord.Embed(title="**MonsterWorld**", url="https://discord.com/oauth2/authorize?client_id=756602085298143412&scope=bot&permissions=2147483647", description="Bot recomendado", color=botcolor)
+  #  await ctx.send(embed=embed)
   else:
     await ctx.send(yourmessage)
 
@@ -770,7 +770,7 @@ async def mjs(ctx, url: str):
   #query = server.query()
   image_name = str(random.randint(0, 1000000000000000))
   #final_image = "https://mcapi.l64.repl.co/favicon/" + url
-  urllib.request.urlretrieve(status.favicon, f"cache/{image_name}.png")
+  if os.getenv("WEBSERVER") == "1": urllib.request.urlretrieve(status.favicon, f"cache/{image_name}.png")
   embed=discord.Embed(title=url, color=botcolor)
   if os.getenv("WEBSERVER") == "1": embed.set_thumbnail(url=f'{os.getenv("WEBSERVERURL")}/cache/{image_name}.png')
   else: embed.set_thumbnail(url="https://mc-api.net/v3/server/favicon/" + url)
