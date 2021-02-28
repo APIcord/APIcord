@@ -14,15 +14,17 @@
 	<body>
 		<img width="100px" height="auto" src="{{avatar}}" alt="Avatar">
 		<h1><span id="this_bot_is_alive">This bot is alive!</span></h1>
-		<p><span id="subtitle">Now you can enjoy of this <a href="https://apicord.github.io">APIcord</a> instance on your chat application</span></p>
+		<p><span id="subtitle">Now you can enjoy of this <a href="https://apicord.rf.gd">APIcord</a> instance on your chat application</span></p>
 		<h2><span id="about_this_instance">About this instance</span></h2>
-		<h3><b><span id="name">Name:</span></b> {{instance_name}}</h3>
-    <h3><b><span id="owner">Owner:</span></b> {{instance_owner}}</h3>
-    <h3><b><span id="type_of_instance">Type of instance:</span></b> Discord <i class="fa fa-discord"></i></h3>
-		<h3><b><span id="prefix">Prefix:</span></b> {{prefix}}</h3>
-		<h3><b><span id="number_of_servers">Number of servers:</span></b> {{guilds}}</h3>
+		<p class="info">
+			<b><span id="name">Name:</span></b> {{instance_name}}<br>
+			<b><span id="owner">Owner:</span></b> {{instance_owner}}<br>
+			<b><span id="type_of_instance">Type of instance:</span></b> Discord <i class="fa fa-discord"></i><br>
+			<b><span id="prefix">Prefix:</span></b> {{prefix}}<br>
+			<b><span id="number_of_servers">Number of servers:</span></b> {{guilds}}<br>
+		</p>
 		<br>
-		<p>&copy;2020 <a href="https://lucas.codeberg.page">absucc</a> - Powered by <a href="https://apicord.github.io">APIcord</a> - <a href="https://github.com/APIcord/discord">Source code</a></p>
+		<p>&copy;2020-2021 <a href="https://lucas.codeberg.page">Absucc</a> - Powered by <a href="https://apicord.rf.gd">APIcord</a> - <a href="https://github.com/APIcord/APIcord">Source code</a></p>
 	</body>
   <script src="{{ url_for('static', filename='js/bootstrap/bootstrap.bundle.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/lang.js') }}"></script>
@@ -31,7 +33,7 @@
 		if (isSpanish==true) {
       document.getElementById("title").innerHTML = "¡Este bot está vivo!";
 			document.getElementById("this_bot_is_alive").innerHTML = "¡Este bot está vivo!";
-			document.getElementById("subtitle").innerHTML = "Ahora puedes disfrutar de está instancia de <a href=\"https://apicord.github.io\">APIcord</a> en tu aplicación de chat";
+			document.getElementById("subtitle").innerHTML = "Ahora puedes disfrutar de está instancia de <a href=\"https://apicord.rf.gd\">APIcord</a> en tu aplicación de chat";
 			document.getElementById("about_this_instance").innerHTML = "Datos de esta instancia";
 			document.getElementById("name").innerHTML = "Nombre:";
 			document.getElementById("owner").innerHTML = "Dueño:";
@@ -41,7 +43,7 @@
 		} else {
       document.getElementById("title").innerHTML = "This bot is alive!";
 			document.getElementById("this_bot_is_alive").innerHTML = "This bot is alive!";
-			document.getElementById("subtitle").innerHTML = "Now you can enjoy of this <a href=\"https://apicord.github.io\">APIcord</a> instance on your chat application";
+			document.getElementById("subtitle").innerHTML = "Now you can enjoy of this <a href=\"https://apicord.rf.gd\">APIcord</a> instance on your chat application";
 			document.getElementById("about_this_instance").innerHTML = "About this instance";
 			document.getElementById("name").innerHTML = "Name:";
 			document.getElementById("owner").innerHTML = "Owner:";
