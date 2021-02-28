@@ -228,7 +228,7 @@ async def motd(ctx):
 @bot.command()
 async def changes(ctx):
   motdread = open("changes.txt","r") 
-  await ctx.send(motdread.read())
+  await ctx.send(f"**APIcord v{__version__}**\n" + motdread.read())
   motdread.close()
 
 @bot.command()
