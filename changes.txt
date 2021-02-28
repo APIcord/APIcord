@@ -1,2 +1,2 @@
-- api!dice & api!ranbtw (Info on api!info more)
-- Default XKmodern instance URL changed
+- Light changes
+- Bug fixes
