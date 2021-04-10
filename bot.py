@@ -17,7 +17,7 @@ from google_trans_new import google_translator
 from mcstatus import MinecraftServer
 # import cairosvg
 
-__version__ = "Alpha 3.3.4"
+__version__ = "Alpha 3.3.5"
 prefix = os.getenv("PREFIX")
 color = os.getenv("COLOR")
 
@@ -135,7 +135,7 @@ async def status():
 @bot.event
 async def on_ready():
   bot.loop.create_task(status())
-  
+
 # Good part
 
 @bot.command()
@@ -209,12 +209,13 @@ async def info(ctx, category):
     embed.add_field(name=prefix + "delete <amount>", value="Delete message", inline=True)
     embed.add_field(name=prefix + "hug", value="A hug, for you, my friend", inline=True)
     embed.add_field(name=prefix + "motd", value="Read the message of the day!", inline=True)
-    embed.add_field(name=prefix + "mjs <address>", value="Info of a Minecraft: Java Edition server [WIP]", inline=True)
+    embed.add_field(name=prefix + "mjs <address>", value="Info of a Minecraft: Java Edition server", inline=True)
     embed.add_field(name=prefix + "say <words>", value="The bot something for you", inline=True)
     embed.add_field(name=prefix + "purge <amount>", value="Delete message", inline=True)
     embed.add_field(name=prefix + "xkcd <0 (Current) /number>", value="Read a comic of xkcd! IN APICORD!!!", inline=True)
     embed.add_field(name=prefix + "ranbtw <number 1> <number 2>", value="Sends a random number between <number 1> and <number 2>", inline=True)
     embed.add_field(name=prefix + "dice", value="A dice.", inline=True)
+    embed.add_field(name=prefix + "social", value="It's like a social network, but in a Discord bot", inline=True)
     await ctx.send(embed=embed)
   else:
     await ctx.send("Error, please put a valid command")
@@ -556,7 +557,20 @@ async def images(ctx):
     embed_two.set_image(url=jsdata['url'])
     embed_two.set_footer(text="Powered by Dev Daksan's Meme API")
     await ctx.send(embed=embed_two)
+"""
+@bot.command(aliases=["Eposting"], help="The Eposting has sponken")
+async def eposting(ctx):
+  jsondori1 = http.request("GET", "https://eapi.l64.repl.co/random.php")
+  jsondori = jsondori1.data.decode("utf-8")
+  jsdata = json.loads(jsondori)
 
+  #Embed
+  embed_two=discord.Embed(title=jsdata['title'], url="https://e.l64.repl.co/", color=botcolor)
+  embed_two.set_thumbnail(url="https://apicord.github.io/img/apicord.jpeg")
+  embed_two.set_image(url=jsdata['image'])
+  embed_two.set_footer(text="Powered by Eposting's API")
+  await ctx.send(embed=embed_two)
+"""
 @bot.command(aliases=["rmeme", "givemeameme", "gimmeameme"], help="Random Reddit meme")
 async def reddit(ctx):
   # if memetype == "meme":
@@ -765,6 +779,10 @@ async def xkcd(ctx, numberz: int):
 
 @bot.command()
 async def mjs(ctx, url: str):
+  @bot.event
+  async def on_command_error(ctx,error):
+    embed=discord.Embed(title=url, description="This server doesn't exists or is offline", color=botcolor)
+    await ctx.send(embed=embed)
   server = MinecraftServer.lookup(url)
   status = server.status()
   #query = server.query()
@@ -774,10 +792,10 @@ async def mjs(ctx, url: str):
   embed=discord.Embed(title=url, color=botcolor)
   if os.getenv("WEBSERVER") == "1": embed.set_thumbnail(url=f'{os.getenv("WEBSERVERURL")}/cache/{image_name}.png')
   else: embed.set_thumbnail(url="https://mc-api.net/v3/server/favicon/" + url)
-  if status.players.max == 0: online_or_not = "Offline"
-  else: online_or_not = "Online"
+  if status.players.max == 0 or 1 or 2 or 3 or 5: online_or_not = "Bloqued"
+  else: online_or_not = "Open"
   embed.add_field(name="Status", value=online_or_not, inline=True)
-  if status.players.max != 0: embed.add_field(name="People online", value=str(status.players.online) + "/" + str(status.players.max), inline=True)
+  if status.players.max != 0 or 1 or 2 or 3 or 5: embed.add_field(name="People online", value=str(status.players.online) + "/" + str(status.players.max), inline=True)
   embed.add_field(name="Version", value=status.version.name, inline=True)
   embed.add_field(name="Ping", value=str(status.latency), inline=True)
   embed.set_footer(text="Powered by mcstatus & MC-API")
@@ -865,6 +883,27 @@ async def christmas(ctx):
     else:
       await ctx.send("It's not christmas\nThis is easter egg is for Christmas Eve & Christmas\nWait for it")
 
+@bot.command()
+async def social(ctx):
+  af2021random = random.randint(1, 10)
+  if af2021random == 1: await ctx.send("I don't know how to make an april fools prank")
+  elif af2021random == 2: await ctx.send("**Abduskan!!!!**")
+  elif af2021random == 3: await ctx.send("Don't cancel me Twitter users!!!")
+  elif af2021random == 4: await ctx.send("You've been april-fooled!!!!!!!")
+  elif af2021random == 5: await ctx.send("""SRPL.IT          [download minecraft plus] [🔍]
+
+**Minecraft Plus!**
+https://plus.minecraft.net
+
+**Download Minecraft Plus NOW! Free 2021**
+en.minecraftnowdescargar.dwnl0add""")
+  elif af2021random == 6: await ctx.send("""```GIVEAWAY!!!!! 1 Notro
+1. Like this video: https://youtu.be/dQw4w9WgXcQ
+2. Send a message to the creator of this bot```""")
+  elif af2021random == 7: await ctx.send("Drink alfajor")
+  elif af2021random == 8: await ctx.send("Albion Online es un mmorpg no lineal, en el que escribes tu propia historia sin limitarte a seguir un camino prefijado.")
+  elif af2021random == 9: await ctx.send("I'm a car")
+  elif af2021random == 10: await ctx.send("https://youtu.be/v1cFhgW1QJg")
     
 # WEBSERVER
 enwebserver = True
