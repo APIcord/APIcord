@@ -31,7 +31,7 @@ This bot is running in Discord 24/7 in a official "instance", this is disponible
 - [Infinity Bot List](https://infinitybotlist.com/bots/757258298725630008)
 - [Here](https://apicord.github.io/invite)
 
-## Send Ideas
+## Send ideas
 Want to colaborate with ideas? [Leave an issue!](https://github.com/APIcord/APIcord/issues/new/choose) and tag it with the "[idea](https://github.com/APIcord/APIcord/issues?q=is%3Aissue+is%3Aopen+label%3Aidea)" tag
 
 ## Want to see the code/download older versions
