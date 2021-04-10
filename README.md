@@ -5,6 +5,8 @@
 - [Cat Facts](https://catfact.ninja)
 - [Reddit Memes](https://github.com/R3l3ntl3ss/Meme_Api)
 - [Meme generator](https://memegen.link)
+- Translator ([API](https://github.com/lushan88a/google_trans_new) | [Translator](https://translate.google.com))
+- [XKCD Reader](https://xkcd.com/json.html)
 - [and more!!!](https://some-random-api.ml)
 
 ## Installation
@@ -26,12 +28,11 @@ This bot is running in Discord 24/7 in a official "instance", this is disponible
 - [Discordlistology](https://discordlistology.com/bots/757258298725630008)
 - [Discord Bots (bots.gg)](https://discord.bots.gg/bots/757258298725630008)
 - [Discord Bot List / Top.gg / DBL](https://top.gg/bot/757258298725630008)
+- [Infinity Bot List](https://infinitybotlist.com/bots/757258298725630008)
 - [Here](https://apicord.github.io/invite)
 
-## Ideas
-- [Explain xkcd](https://www.explainxkcd.com/wiki/index.php/Main_Page)
-- api!date
-Want to colaborate with ideas? [Leave an issue!](https://github.com/APIcord/discord/issues/new/choose) and tag it with the "[idea](https://github.com/APIcord/discord/issues?q=is%3Aissue+is%3Aopen+label%3Aidea)" tag
+## Send Ideas
+Want to colaborate with ideas? [Leave an issue!](https://github.com/APIcord/APIcord/issues/new/choose) and tag it with the "[idea](https://github.com/APIcord/APIcord/issues?q=is%3Aissue+is%3Aopen+label%3Aidea)" tag
 
 ## Want to see the code/download older versions
 - Alpha1+ are in [this zip files](https://github.com/APIcord/discord-archive/tree/Alpha)
