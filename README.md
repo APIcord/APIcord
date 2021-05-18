@@ -1,5 +1,5 @@
 # [API](https://en.wikipedia.org/wiki/API)[cord](https://en.wikipedia.org/wiki/Discord_(software)) Discord [![Run on Repl.it](https://repl.it/badge/github/APIcord/discord)](https://repl.it/github/APIcord/APIcord)
-[License](https://img.shields.io/github/license/APIcord/APIcord) [Discord server](https://img.shields.io/discord/807662090965221386?label=Discord%20server&style=plastic)
+![License](https://img.shields.io/github/license/APIcord/APIcord) ![Discord server](https://img.shields.io/discord/807662090965221386?label=Discord%20server&style=plastic)
 ## Features
 - [Coffee Images](https://coffee.alexflipnote.dev)
 - [Dog Images](https://dog.ceo/dog-api)
